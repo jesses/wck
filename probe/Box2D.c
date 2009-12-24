@@ -52,8 +52,8 @@ int o;
 	
 #define V(class, member, counter) \
 	o = (int)offsetof(class, member); \
-	sprintf(s, "public function get %s():Array { return readVertices(_ptr + %d, %s); }", #member, o, #counter); TS(s); \
-	sprintf(s, "public function set %s(v:Array):void { writeVertices(_ptr + %d, v); %s = v.length; }", #member, o, #counter); TS(s);
+	sprintf(s, "public function get %s():Vector.<V2> { return readVertices(_ptr + %d, %s); }", #member, o, #counter); TS(s); \
+	sprintf(s, "public function set %s(v:Vector.<V2>):void { writeVertices(_ptr + %d, v); %s = v.length; }", #member, o, #counter); TS(s);
 
 #define R(class, member, rclass) \
 	o = (int)offsetof(class, member); \
@@ -261,6 +261,7 @@ int main() {
 	T(b2Shape);
 	S8(b2Shape, m_type);
 	F(b2Shape, m_radius);
+	F(b2Shape, m_area);
 	
 	T(----------);
 	

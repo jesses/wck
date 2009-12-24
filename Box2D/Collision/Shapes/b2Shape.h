@@ -82,10 +82,14 @@ public:
 	/// The inertia tensor is computed about the local origin, not the centroid.
 	/// @param massData returns the mass data for this shape.
 	/// @param density the density in kilograms per meter squared.
-	virtual void ComputeMass(b2MassData* massData, float32 density) const = 0;
+	virtual void ComputeMass(b2MassData* massData, float32 density) = 0;
 
 	Type m_type;
 	float32 m_radius;
+	
+	/// AS3
+	float32 m_area;
+	/// END AS3
 };
 
 inline b2Shape::Type b2Shape::GetType() const

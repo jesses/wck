@@ -79,9 +79,12 @@ void b2CircleShape::ComputeAABB(b2AABB* aabb, const b2Transform& transform) cons
 	aabb->upperBound.Set(p.x + m_radius, p.y + m_radius);
 }
 
-void b2CircleShape::ComputeMass(b2MassData* massData, float32 density) const
+void b2CircleShape::ComputeMass(b2MassData* massData, float32 density)
 {
-	massData->mass = density * b2_pi * m_radius * m_radius;
+	/// AS3
+	m_area = b2_pi * m_radius * m_radius;
+	massData->mass = density * m_area;
+	/// END AS3
 	massData->center = m_p;
 
 	// inertia about the local origin

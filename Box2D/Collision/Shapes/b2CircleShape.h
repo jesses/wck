@@ -40,7 +40,7 @@ public:
 	void ComputeAABB(b2AABB* aabb, const b2Transform& transform) const;
 
 	/// @see b2Shape::ComputeMass
-	void ComputeMass(b2MassData* massData, float32 density) const;
+	void ComputeMass(b2MassData* massData, float32 density);
 
 	/// Get the supporting vertex index in the given direction.
 	int32 GetSupport(const b2Vec2& d) const;

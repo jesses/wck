@@ -279,7 +279,7 @@ void b2PolygonShape::ComputeAABB(b2AABB* aabb, const b2Transform& xf) const
 	aabb->upperBound = upper + r;
 }
 
-void b2PolygonShape::ComputeMass(b2MassData* massData, float32 density) const
+void b2PolygonShape::ComputeMass(b2MassData* massData, float32 density)
 {
 	// Polygon mass, centroid, and inertia.
 	// Let rho be the polygon density in mass per unit area.
@@ -369,6 +369,10 @@ void b2PolygonShape::ComputeMass(b2MassData* massData, float32 density) const
 	b2Assert(area > b2_epsilon);
 	center *= 1.0f / area;
 	massData->center = center;
+	///AS3
+	
+	m_area = area;
+	///AS3
 
 	// Inertia tensor relative to the local origin.
 	massData->I = density * I;
