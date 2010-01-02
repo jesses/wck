@@ -304,6 +304,7 @@ int main() {
 	B(b2Fixture, m_isSensor);
 	I(b2Fixture, m_userData);
 	F(b2Fixture, m_density);
+	F(b2Fixture, m_conveyorBeltSpeed);
 	
 	T(----------);
 	

@@ -48,6 +48,21 @@
 		}
 		
 		/**
+		 * Destroy base function just sets _ptr = 0. This should be overridden
+		 * to actually destroy the object.
+		 */
+		public function destroy():void {
+			_ptr = 0;
+		}
+		
+		/**
+		 * Does the object point to a C++ equivalent (i.e. is it created and not destroyed)?
+		 */
+    public function get valid():Boolean {
+			return _ptr != 0;
+		}
+		
+		/**
 		 * Write a vertex array of the format [new V2(x,y), new V2(x,y), ...] to C++ memory.
 		 */
 		public function writeVertices(adr:int, v:Vector.<V2>):void {

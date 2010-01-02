@@ -1,110 +1,1 @@
-﻿package misc {
-
-	public class KeyCodes {
-		
-		public static const A:uint = 65;
-		public static const B:uint = 66;
-		public static const C:uint = 67;
-		public static const D:uint = 68;
-		public static const E:uint = 69;
-		public static const F:uint = 70;
-		public static const G:uint = 71;
-		public static const H:uint = 72;
-		public static const I:uint = 73;
-		public static const J:uint = 74;
-		public static const K:uint = 75;
-		public static const L:uint = 76;
-		public static const M:uint = 77;
-		public static const N:uint = 78;
-		public static const O:uint = 79;
-		public static const P:uint = 80;
-		public static const Q:uint = 81;
-		public static const R:uint = 82;
-		public static const S:uint = 83;
-		public static const T:uint = 84;
-		public static const U:uint = 85;
-		public static const V:uint = 86;
-		public static const W:uint = 87;
-		public static const X:uint = 88;
-		public static const Y:uint = 89;
-		public static const Z:uint = 90;
-		public static const N0:uint = 48; KeyCodes[0] = 48;
-		public static const N1:uint = 49; KeyCodes[1] = 49;
-		public static const N2:uint = 50; KeyCodes[2] = 50;
-		public static const N3:uint = 51; KeyCodes[3] = 51;
-		public static const N4:uint = 52; KeyCodes[4] = 52;
-		public static const N5:uint = 53; KeyCodes[5] = 53;
-		public static const N6:uint = 54; KeyCodes[6] = 54;
-		public static const N7:uint = 55; KeyCodes[7] = 55;
-		public static const N8:uint = 56; KeyCodes[8] = 56;
-		public static const N9:uint = 57; KeyCodes[9] = 57;
-		public static const NP0:uint = 96;
-		public static const NP1:uint = 97;
-		public static const NP2:uint = 98;
-		public static const NP3:uint = 99;
-		public static const NP4:uint = 100;
-		public static const NP5:uint = 101;
-		public static const NP6:uint = 102;
-		public static const NP7:uint = 103;
-		public static const NP8:uint = 104;
-		public static const NP9:uint = 105;
-		public static const NPMULTIPLY:uint = 106;
-		public static const NPADD:uint = 107;
-		public static const NPENTER:uint = 13;
-		public static const NPSUBTRACT:uint = 109;
-		public static const NPDECIMAL:uint = 110;
-		public static const NPDIVIDE:uint = 111;
-		public static const F1:uint = 112;
-		public static const F2:uint = 113;
-		public static const F3:uint = 114;
-		public static const F4:uint = 115;
-		public static const F5:uint = 116;
-		public static const F6:uint = 117;
-		public static const F7:uint = 118;
-		public static const F8:uint = 119;
-		public static const F9:uint = 120;
-		public static const F11:uint = 122;
-		public static const F12:uint = 123;
-		public static const F13:uint = 124;
-		public static const F14:uint = 125;
-		public static const F15:uint = 126;
-		public static const BACKSPACE:uint = 8;
-		public static const TAB:uint = 9;
-		public static const ENTER:uint = 13;
-		public static const SHIFT:uint = 16;
-		public static const CTRL:uint = 17;
-		public static const CAPS:uint = 20;
-		public static const ESC:uint = 27;
-		public static const SPACE:uint = 32; KeyCodes[' '] = 32;
-		public static const PGUP:uint = 33;
-		public static const PGDN:uint = 34;
-		public static const END:uint = 35;
-		public static const HOME:uint = 36;
-		public static const LEFT:uint = 37;
-		public static const UP:uint = 38;
-		public static const RIGHT:uint = 39;
-		public static const DOWN:uint = 40;
-		public static const INS:uint = 45;
-		public static const DEL:uint = 46;
-		public static const NUMLCK:uint = 144;
-		public static const SCRLCK:uint = 145;
-		public static const PAUSE:uint = 19;
-		public static const SCOLON:uint = 186; KeyCodes[';'] = 186;
-		public static const EQUAL:uint = 187; KeyCodes['='] = 187;
-		public static const MINUS:uint = 189; KeyCodes['-'] = 189;
-		public static const FSLASH:uint = 191; KeyCodes['/'] = 191;
-		public static const ACCENT:uint = 192; KeyCodes['`'] = 192;
-		public static const LBRACKET:uint = 219; KeyCodes['['] = 219
-		public static const BSLASH:uint = 220; KeyCodes['\\'] = 220;
-		public static const RBRACKET:uint = 221; KeyCodes[']'] = 221;
-		public static const QUOTE:uint = 222; KeyCodes["'"] = 222;
-		public static const COMMA:uint = 188; KeyCodes[','] = 188;
-		public static const PERIOD:uint = 190; KeyCodes['.'] = 190;
-		public static const FSLASH2:uint = 191;
-		
-		
-	}	
-}
-
-
-	
+﻿package misc {	public class KeyCodes {				/// Alphabet		KeyCodes['A'] = 65;		KeyCodes['a'] = 65; 		KeyCodes['B'] = 66;		KeyCodes['b'] = 66;		KeyCodes['C'] = 67;		KeyCodes['c'] = 67;		KeyCodes['D'] = 68;		KeyCodes['d'] = 68;		KeyCodes['E'] = 69;		KeyCodes['e'] = 69;		KeyCodes['F'] = 70;		KeyCodes['f'] = 70;		KeyCodes['G'] = 71;		KeyCodes['g'] = 71;		KeyCodes['H'] = 72;		KeyCodes['h'] = 72;		KeyCodes['I'] = 73;		KeyCodes['i'] = 73;		KeyCodes['J'] = 74;		KeyCodes['j'] = 74;		KeyCodes['K'] = 75;		KeyCodes['k'] = 75;		KeyCodes['L'] = 76;		KeyCodes['l'] = 76;		KeyCodes['M'] = 77;		KeyCodes['m'] = 77;		KeyCodes['N'] = 78;		KeyCodes['n'] = 78;		KeyCodes['O'] = 79;		KeyCodes['o'] = 79;		KeyCodes['P'] = 80;		KeyCodes['p'] = 80;		KeyCodes['Q'] = 81;		KeyCodes['q'] = 81;		KeyCodes['R'] = 82;		KeyCodes['r'] = 82;		KeyCodes['S'] = 83;		KeyCodes['s'] = 83;		KeyCodes['T'] = 84;		KeyCodes['t'] = 84;		KeyCodes['U'] = 85;		KeyCodes['u'] = 85;		KeyCodes['V'] = 86;		KeyCodes['v'] = 86;		KeyCodes['W'] = 87;		KeyCodes['w'] = 87;		KeyCodes['X'] = 88;		KeyCodes['x'] = 88;		KeyCodes['Y'] = 89;		KeyCodes['y'] = 89;		KeyCodes['Z'] = 90;		KeyCodes['z'] = 90;				/// Numbers		KeyCodes['N0'] = 48;		KeyCodes[0] = 48;		KeyCodes['N1'] = 49;		KeyCodes[1] = 49;		KeyCodes['N2'] = 50;		KeyCodes[2] = 50;		KeyCodes['N3'] = 51;		KeyCodes[3] = 51;		KeyCodes['N4'] = 52;		KeyCodes[4] = 52;		KeyCodes['N5'] = 53;		KeyCodes[5] = 53;		KeyCodes['N6'] = 54;		KeyCodes[6] = 54;		KeyCodes['N7'] = 55;		KeyCodes[7] = 55;		KeyCodes['N8'] = 56;		KeyCodes[8] = 56;		KeyCodes['N9'] = 57;		KeyCodes[9] = 57;				/// Number Pad		KeyCodes['NP0'] = 96;		KeyCodes['NP1'] = 97;		KeyCodes['NP2'] = 98;		KeyCodes['NP3'] = 99;		KeyCodes['NP4'] = 100;		KeyCodes['NP5'] = 101;		KeyCodes['NP6'] = 102;		KeyCodes['NP7'] = 103;		KeyCodes['NP8'] = 104;		KeyCodes['NP9'] = 105;		KeyCodes['NP*'] = 106;		KeyCodes['NP+'] = 107;		KeyCodes['NPENTER'] = 13;		KeyCodes['NP-'] = 109;		KeyCodes['NP.'] = 110;		KeyCodes['NP/'] = 111;				/// Function Keys		KeyCodes['F1'] = 112;		KeyCodes['F2'] = 113;		KeyCodes['F3'] = 114;		KeyCodes['F4'] = 115;		KeyCodes['F5'] = 116;		KeyCodes['F6'] = 117;		KeyCodes['F7'] = 118;		KeyCodes['F8'] = 119;		KeyCodes['F9'] = 120;		KeyCodes['F11'] = 122;		KeyCodes['F12'] = 123;		KeyCodes['F13'] = 124;		KeyCodes['F14'] = 125;		KeyCodes['F15'] = 126;				/// Other		KeyCodes['BACKSPACE'] = 8;		KeyCodes['TAB'] = 9;		KeyCodes['ENTER'] = 13;		KeyCodes['SHIFT'] = 16;		KeyCodes['CTRL'] = 17;		KeyCodes['CAPS'] = 20;		KeyCodes['ESC'] = 27;		KeyCodes['SPACE'] = 32; 		KeyCodes[' '] = 32;		KeyCodes['PGUP'] = 33;		KeyCodes['PGDN'] = 34;		KeyCodes['END'] = 35;		KeyCodes['HOME'] = 36;		KeyCodes['LEFT'] = 37;		KeyCodes['UP'] = 38;		KeyCodes['RIGHT'] = 39;		KeyCodes['DOWN'] = 40;		KeyCodes['INS'] = 45;		KeyCodes['DEL'] = 46;		KeyCodes['NUMLCK'] = 144;		KeyCodes['SCRLCK'] = 145;		KeyCodes['PAUSE'] = 19;		KeyCodes['SCOLON'] = 186;		KeyCodes[';'] = 186;		KeyCodes[':'] = 186;		KeyCodes['EQUAL'] = 187;		KeyCodes['='] = 187;		KeyCodes['+'] = 187;		KeyCodes['MINUS'] = 189;		KeyCodes['-'] = 189;		KeyCodes['_'] = 189;		KeyCodes['FSLASH'] = 191;		KeyCodes['/'] = 191;		KeyCodes['?'] = 191;		KeyCodes['ACCENT'] = 192;		KeyCodes['`'] = 192;		KeyCodes['~'] = 192;		KeyCodes['LBRACKET'] = 219;		KeyCodes['['] = 219;		KeyCodes['{'] = 219;		KeyCodes['BSLASH'] = 220;		KeyCodes['\\'] = 220;		KeyCodes['|'] = 220;		KeyCodes['RBRACKET'] = 221;		KeyCodes[']'] = 221;		KeyCodes['}'] = 221;		KeyCodes['QUOTE'] = 222;		KeyCodes["'"] = 222;		KeyCodes['"'] = 222;		KeyCodes['COMMA'] = 188;		KeyCodes[','] = 188;		KeyCodes['<'] = 188;		KeyCodes['PERIOD'] = 190;		KeyCodes['.'] = 190;		KeyCodes['>'] = 190;		KeyCodes['FSLASH2'] = 191;			}	}	

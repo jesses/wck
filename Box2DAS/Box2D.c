@@ -10,11 +10,9 @@ export ACHACKS_TMPS=1
 
 
 */
-#include "Box2DAS/Box2d.h";
+#include "Box2DAS/Box2D.h";
 
-class WorldListener : 
-	public b2DestructionListener, 
-	public b2ContactListener {
+class WorldListener : public b2ContactListener {
 public:
 	
 	AS3_Val usr;
@@ -50,18 +48,6 @@ public:
 		if(contact->m_fixtureA->m_reportPostSolve || contact->m_fixtureB->m_reportPostSolve) {
 			ReportContact(contact, "PostSolve");
 		}
-	}
-	
-	void SayGoodbye(b2Joint* joint) {
-		AS3_CallTS("SayGoodbyeJoint", usr, "AS3ValType", (AS3_Val)joint->m_userData);
-	}
-
-	void SayGoodbye(b2Fixture* fixture) {
-		AS3_CallTS("SayGoodbyeFixture", usr, "AS3ValType", (AS3_Val)fixture->m_userData);
-	}
-
-	void Violation(b2Body* body) {
-		AS3_CallTS("Violation", usr, "AS3ValType", (AS3_Val)body->m_userData);
 	}
 };
 
@@ -132,7 +118,6 @@ AS3_Val b2World_new(void* data, AS3_Val args) {
 	g.Set(gx, gy);
 	b2World* w = new b2World(g, s == 1);
 	WorldListener* l = new WorldListener();
-	w->SetDestructionListener(l);
 	w->SetContactListener(l);
 	l->usr = usr;
 	return_as3_ptr(w);

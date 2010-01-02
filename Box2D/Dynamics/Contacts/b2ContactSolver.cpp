@@ -84,6 +84,11 @@ b2ContactSolver::b2ContactSolver(const b2TimeStep& step, b2Contact** contacts, i
 		cc->localPoint = manifold->m_localPoint;
 		cc->radius = radiusA + radiusB;
 		cc->type = manifold->m_type;
+		
+		/// AS3
+		cc->fixtureA = fixtureA;
+		cc->fixtureB = fixtureB;
+		/// END AS3
 
 		for (int32 j = 0; j < cc->pointCount; ++j)
 		{
@@ -249,6 +254,13 @@ void b2ContactSolver::SolveVelocityConstraints()
 
 			// Relative velocity at contact
 			b2Vec2 dv = vB + b2Cross(wB, ccp->rB) - vA - b2Cross(wA, ccp->rA);
+			
+			/// AS3
+			dv.x += c->fixtureA->m_conveyorBeltSpeed * tangent.x;
+			dv.y += c->fixtureA->m_conveyorBeltSpeed * tangent.y;
+			dv.x -= c->fixtureB->m_conveyorBeltSpeed * tangent.x;
+			dv.y -= c->fixtureB->m_conveyorBeltSpeed * tangent.y;
+			/// END AS3
 
 			// Compute tangent force
 			float32 vt = b2Dot(dv, tangent);
@@ -278,7 +290,7 @@ void b2ContactSolver::SolveVelocityConstraints()
 
 			// Relative velocity at contact
 			b2Vec2 dv = vB + b2Cross(wB, ccp->rB) - vA - b2Cross(wA, ccp->rA);
-
+			
 			// Compute normal impulse
 			float32 vn = b2Dot(dv, normal);
 			float32 lambda = -ccp->normalMass * (vn - ccp->velocityBias);
@@ -289,6 +301,7 @@ void b2ContactSolver::SolveVelocityConstraints()
 
 			// Apply contact impulse
 			b2Vec2 P = lambda * normal;
+			
 			vA -= invMassA * P;
 			wA -= invIA * b2Cross(ccp->rA, P);
 

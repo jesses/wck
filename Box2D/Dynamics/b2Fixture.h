@@ -222,6 +222,10 @@ public:
 	bool m_isSensor;
 
 	void* m_userData;
+	
+	/// AS3
+	float32 m_conveyorBeltSpeed;
+	/// END AS3
 };
 
 inline b2Shape::Type b2Fixture::GetType() const

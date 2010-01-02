@@ -57,6 +57,11 @@ struct b2ContactConstraint
 	float32 restitution;
 	int32 pointCount;
 	b2Manifold* manifold;
+	
+	/// AS3
+	b2Fixture* fixtureA;
+	b2Fixture* fixtureB;
+	/// END AS3
 };
 
 class b2ContactSolver
