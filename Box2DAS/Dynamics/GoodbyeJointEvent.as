@@ -1,4 +1,4 @@
-﻿package wck {
+﻿package Box2DAS.Dynamics {
 	
 	import Box2DAS.*;
 	import Box2DAS.Collision.*;
@@ -10,15 +10,15 @@
 	import cmodule.Box2D.*;
 	import flash.events.*;
 	
-	public class GoodbyeFixtureEvent extends Event {
+	public class GoodbyeJointEvent extends Event {
 		
-		public static var GOODBYE_FIXTURE:String = 'onGoodbyeFixture';
+		public static var GOODBYE_JOINT:String = 'onGoodbyeJoint';
 		
-		public var fixture:b2Fixture;
+		public var joint:b2Joint;
 		
-		public function GoodbyeFixtureEvent(f:b2Fixture) {
-			fixture = f;
-			super(GOODBYE_FIXTURE);
+		public function GoodbyeJointEvent(j:b2Joint) {
+			joint = j;
+			super(GOODBYE_JOINT);
 		}
 	}
 }

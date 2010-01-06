@@ -35,18 +35,22 @@ public:
 		}
 	}
 	
-	void PreSolve(b2Contact* contact, b2Manifold* oldManifold) {
+	void PreSolve(b2Contact* c, const b2Manifold* o) {
 		/// Dont bother with zero-point pre-solve events. Can't see the point in reporting these.
-		if(contact->IsTouching()) {
-			if(contact->m_fixtureA->m_reportPreSolve || contact->m_fixtureB->m_reportPreSolve) {
-				ReportContact(contact, "PreSolve");
+		if(c->IsTouching()) {
+			if(c->m_fixtureA->m_reportPreSolve || c->m_fixtureB->m_reportPreSolve) {
+				AS3_CallTS("PreSolve", usr, "PtrType, AS3ValType, AS3ValType, PtrType", c, 
+					(AS3_Val)c->m_fixtureA->m_userData,
+					(AS3_Val)c->m_fixtureB->m_userData, o);
 			}
 		}
 	}
 	
-	void PostSolve(b2Contact* contact, b2ContactImpulse* impulse) {
-		if(contact->m_fixtureA->m_reportPostSolve || contact->m_fixtureB->m_reportPostSolve) {
-			ReportContact(contact, "PostSolve");
+	void PostSolve(b2Contact* c, const b2ContactImpulse* i) {
+		if(c->m_fixtureA->m_reportPostSolve || c->m_fixtureB->m_reportPostSolve) {
+			AS3_CallTS("PostSolve", usr, "PtrType, AS3ValType, AS3ValType, PtrType", c, 
+				(AS3_Val)c->m_fixtureA->m_userData,
+				(AS3_Val)c->m_fixtureB->m_userData, i);
 		}
 	}
 };

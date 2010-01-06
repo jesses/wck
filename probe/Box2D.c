@@ -603,6 +603,13 @@ int main() {
 	
 	T(----------);
 	
+	T(b2ContactImpulse);
+	F(b2ContactImpulse, normalImpulses[0]);
+	F(b2ContactImpulse, normalImpulses[1]);
+	F(b2ContactImpulse, tangentImpulses[0]);
+	F(b2ContactImpulse, tangentImpulses[1]);
+	
+	
 	AS3_LibInit(AS3_Object(
 		"emptyFunction:AS3ValType,"
 		"testFunction:AS3ValType",
