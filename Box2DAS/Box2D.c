@@ -247,6 +247,58 @@ AS3_Val b2Body_SetType(void* data, AS3_Val args) {
 	return AS3_Null();
 }
 
+AS3_Val b2PolygonShape_Decompose(void* data, AS3_Val args) {
+	b2Polygon p;
+	b2Polygon results[100];
+	asm("%0 vt.get(%1)[0].length / 2;" : "=r" (p.nVertices) : "r" (args));	
+	int i, j;
+	p.x = new float32[p.nVertices];
+	p.y = new float32[p.nVertices];
+	asm("var v:Vector.<Number> = vt.get(%0)[0];" : : "r" (args));	
+	for(i = 0; i < p.nVertices; ++i) {
+		asm("%0 v[%1 * 2]" : "=r" (p.x[i]) : "r" (i));
+		asm("%0 v[%1 * 2 + 1]" : "=r" (p.y[i]) : "r" (i));
+	}
+	int r = DecomposeConvex(&p, results, 100); // Arbitrary maximum
+	asm("arr = [];");
+	b2PolygonShape* s;
+	for(i = 0; i < r; ++i) {
+		s = new b2PolygonShape();
+		asm("arr.push(%0)" : : "r" (s));
+		AS3_Trace(AS3_Number(results[i].nVertices));
+		for(j = 0; j < results[i].nVertices; ++j) {
+			s->m_vertices[j].x = results[i].x[j];
+			s->m_vertices[j].y = results[i].y[j];
+		}
+		s->Set(s->m_vertices, results[i].nVertices);
+	}
+	return AS3_Null();
+}
+
+/*void b2Polygon::AddTo(b2PolygonDef& pd) {
+	if (nVertices < 3) return;
+	
+    b2Vec2* vecs = GetVertexVecs();
+	b2Assert(nVertices <= b2_maxPolygonVertices);
+//	printf("Adding...\n");
+	int32 offset = 0;
+    for (int32 i = 0; i < nVertices; ++i) {
+		//Omit identical neighbors (including wraparound)
+		int32 ind = i - offset;
+		if (vecs[i].x==vecs[remainder(i+1,nVertices)].x &&
+			vecs[i].y==vecs[remainder(i+1,nVertices)].y){
+				offset++;
+				continue;
+		}
+		pd.vertices[ind] = vecs[i];
+//		printf("%f, %f\n",vecs[i].x,vecs[i].y);
+    }
+//	print();
+	pd.vertexCount = nVertices-offset;
+    delete[] vecs;
+}*/
+
+
 int main() {
 		
 	AS3_LibInit(AS3_Object(
@@ -310,7 +362,9 @@ int main() {
 		"b2FrictionJointDef_delete:AS3ValType,"
 		
 		"b2MassData_new:AS3ValType,"
-		"b2MassData_delete:AS3ValType",
+		"b2MassData_delete:AS3ValType,"
+		
+		"b2PolygonShape_Decompose:AS3ValType",
 		
 		AS3F(b2World_new),
 		AS3F(b2World_Step),
@@ -371,7 +425,9 @@ int main() {
 		AS3F(b2FrictionJointDef_delete),
 		
 		AS3F(b2MassData_new),
-		AS3F(b2MassData_delete)
+		AS3F(b2MassData_delete),
+		
+		AS3F(b2PolygonShape_Decompose)
 		
 	));
 	return 0; 

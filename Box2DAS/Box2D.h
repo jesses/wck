@@ -36,6 +36,9 @@
 #include "Box2D/Dynamics/Joints/b2RevoluteJoint.cpp";
 #include "Box2D/Dynamics/Joints/b2FrictionJoint.cpp";
 #include "Box2D/Dynamics/Joints/b2WeldJoint.cpp";
+#include "Box2D/ConvexDecomposition/b2Triangle.cpp";
+
+#include "Box2D/ConvexDecomposition/b2Polygon.cpp";
 
 
 /// Easy tracing.
@@ -83,3 +86,7 @@ as3_new_del(b2MassData);
 /// AS3ValType's value tracker. This can be used to get AS3 stuff hanging out in C++ land.
 
 asm("public var vt:ValueTracker = CTypemap.AS3ValType.valueTracker;");
+
+/// An AS3 Array that can be manipulated via asm.
+
+asm("public var arr:Array;");
