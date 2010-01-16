@@ -251,6 +251,9 @@ AS3_Val b2PolygonShape_Decompose(void* data, AS3_Val args) {
 	b2Polygon p;
 	b2Polygon results[100];
 	asm("%0 vt.get(%1)[0].length / 2;" : "=r" (p.nVertices) : "r" (args));	
+	if(p.nVertices <= 2) {
+		return AS3_Null();
+	}
 	int i, j;
 	p.x = new float32[p.nVertices];
 	p.y = new float32[p.nVertices];
@@ -259,13 +262,13 @@ AS3_Val b2PolygonShape_Decompose(void* data, AS3_Val args) {
 		asm("%0 v[%1 * 2]" : "=r" (p.x[i]) : "r" (i));
 		asm("%0 v[%1 * 2 + 1]" : "=r" (p.y[i]) : "r" (i));
 	}
+	TraceEdge(&p);
 	int r = DecomposeConvex(&p, results, 100); // Arbitrary maximum
 	asm("arr = [];");
 	b2PolygonShape* s;
 	for(i = 0; i < r; ++i) {
 		s = new b2PolygonShape();
 		asm("arr.push(%0)" : : "r" (s));
-		AS3_Trace(AS3_Number(results[i].nVertices));
 		for(j = 0; j < results[i].nVertices; ++j) {
 			s->m_vertices[j].x = results[i].x[j];
 			s->m_vertices[j].y = results[i].y[j];
