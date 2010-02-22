@@ -13,16 +13,16 @@
 	
 		public function b2ManifoldPoint(p:int) {
 			_ptr = p;
-			m_localPoint = new b2Vec2(_ptr + 0);
-			m_id = new b2ContactID(_ptr + 16);
+			localPoint = new b2Vec2(_ptr + 0);
+			id = new b2ContactID(_ptr + 16);
 		}
 		
-		public var m_localPoint:b2Vec2; // m_localPoint = new b2Vec2(_ptr + 0);
-		public function get m_normalImpulse():Number { return mem._mrf(_ptr + 8); }
-		public function set m_normalImpulse(v:Number):void { mem._mwf(_ptr + 8, v); }
-		public function get m_tangentImpulse():Number { return mem._mrf(_ptr + 12); }
-		public function set m_tangentImpulse(v:Number):void { mem._mwf(_ptr + 12, v); }
-		public var m_id:b2ContactID; // m_id = new b2ContactID(_ptr + 16);
+		public var localPoint:b2Vec2; // m_localPoint = new b2Vec2(_ptr + 0);
+		public function get normalImpulse():Number { return mem._mrf(_ptr + 8); }
+		public function set normalImpulse(v:Number):void { mem._mwf(_ptr + 8, v); }
+		public function get tangentImpulse():Number { return mem._mrf(_ptr + 12); }
+		public function set tangentImpulse(v:Number):void { mem._mwf(_ptr + 12, v); }
+		public var id:b2ContactID; // m_id = new b2ContactID(_ptr + 16);
 	
 	}
 }

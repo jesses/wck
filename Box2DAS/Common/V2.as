@@ -124,15 +124,15 @@
 			return V2.subtract(this, b).lengthSquared();
 		}
 		
-		public function normalize():V2 {
+		public function normalize(l:Number = 1):V2 {
 			var len:Number = length();
-			x /= len; y /= len;
+			x *= l / len; y *= l / len;
 			return this;
 		}
 		
-		public static function normalize(a:V2):V2 {
+		public static function normalize(a:V2, l:Number = 1):V2 {
 			var b:V2 = a.clone();
-			b.normalize();
+			b.normalize(l);
 			return b;
 		}
 		
@@ -217,8 +217,8 @@
 		}
 		
 		public function max(b:V2):V2{
-			x = Math.min(x, b.x);
-			y = Math.min(y, b.y);
+			x = Math.max(x, b.x);
+			y = Math.max(y, b.y);
 			return this;
 		}
 		

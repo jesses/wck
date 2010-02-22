@@ -161,7 +161,7 @@ AS3_Val b2World_Step(void* data, AS3_Val args) {
 	b2World* w;
 	double ts;
 	int vi, pi;
-	AS3_ArrayValue(args, "PtrType, DoubleType, IntType, IntType, IntType", &w, &ts, &vi, &pi);	
+	AS3_ArrayValue(args, "PtrType, DoubleType, IntType, IntType", &w, &ts, &vi, &pi);	
 	w->Step(ts, vi, pi);
 	return AS3_Null();
 }
@@ -272,6 +272,13 @@ AS3_Val b2Body_SetType(void* data, AS3_Val args) {
 	return AS3_Null();
 }
 
+AS3_Val b2Contact_Update(void* data, AS3_Val args) {
+	b2Contact* c;
+	AS3_ArrayValue(args, "PtrType", &c);
+	c->Update(c->m_fixtureA->m_body->m_world->m_contactManager.m_contactListener);
+	return AS3_Null();
+}
+
 AS3_Val b2PolygonShape_Decompose(void* data, AS3_Val args) {
 	b2Polygon p;
 	b2Polygon results[100];
@@ -300,6 +307,15 @@ AS3_Val b2PolygonShape_Decompose(void* data, AS3_Val args) {
 		}
 		s->Set(s->m_vertices, results[i].nVertices);
 	}
+	return AS3_Null();
+}
+
+AS3_Val b2Distance(void* data, AS3_Val args) {
+	b2DistanceInput *i;
+	b2DistanceOutput *o;
+	b2SimplexCache *c;
+	AS3_ArrayValue(args, "PtrType, PtrType, PtrType", &o, &c, &i);
+	b2Distance(o, c, i);
 	return AS3_Null();
 }
 
@@ -369,7 +385,20 @@ int main() {
 		"b2MassData_new:AS3ValType,"
 		"b2MassData_delete:AS3ValType,"
 		
-		"b2PolygonShape_Decompose:AS3ValType",
+		"b2Contact_Update:AS3ValType,"
+		
+		"b2PolygonShape_Decompose:AS3ValType,"
+		
+		"b2DistanceInput_new:AS3ValType,"
+		"b2DistanceInput_delete:AS3ValType,"
+		
+		"b2DistanceOutput_new:AS3ValType,"
+		"b2DistanceOutput_delete:AS3ValType,"
+		
+		"b2SimplexCache_new:AS3ValType,"
+		"b2SimplexCache_delete:AS3ValType,"
+		
+		"b2Distance:AS3ValType",
 		
 		AS3F(b2World_new),
 		AS3F(b2World_Step),
@@ -432,7 +461,20 @@ int main() {
 		AS3F(b2MassData_new),
 		AS3F(b2MassData_delete),
 		
-		AS3F(b2PolygonShape_Decompose)
+		AS3F(b2Contact_Update),
+		
+		AS3F(b2PolygonShape_Decompose),
+		
+		AS3F(b2DistanceInput_new),
+		AS3F(b2DistanceInput_delete),
+		
+		AS3F(b2DistanceOutput_new),
+		AS3F(b2DistanceOutput_delete),
+		
+		AS3F(b2SimplexCache_new),
+		AS3F(b2SimplexCache_delete),
+		
+		AS3F(b2Distance)
 		
 	));
 	return 0; 

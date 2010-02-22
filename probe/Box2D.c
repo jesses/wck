@@ -160,6 +160,10 @@ int main() {
 	
 	T(b2ContactID);
 	I(b2ContactID, key);
+	U8(b2ContactID, features.referenceEdge);
+	U8(b2ContactID, features.incidentEdge);
+	U8(b2ContactID, features.incidentVertex);
+	U8(b2ContactID, features.flip);
 	
 	T(----------);
 	
@@ -609,6 +613,46 @@ int main() {
 	F(b2ContactImpulse, tangentImpulses[0]);
 	F(b2ContactImpulse, tangentImpulses[1]);
 	
+	T(----------);
+	
+	T(b2DistanceInput);
+	C(b2DistanceInput, proxyA, b2DistanceProxy);
+	C(b2DistanceInput, proxyB, b2DistanceProxy);
+	C(b2DistanceInput, transformA, b2Transform);
+	C(b2DistanceInput, transformB, b2Transform);
+	B(b2DistanceInput, useRadii);
+	
+	T(----------);
+	
+	T(b2DistanceOutput);
+	C(b2DistanceOutput, pointA, b2Vec2);
+	C(b2DistanceOutput, pointB, b2Vec2);
+	F(b2DistanceOutput, distance);
+	I(b2DistanceOutput, iterations);
+	
+	T(----------);
+	
+	T(b2SimplexCache);
+	F(b2SimplexCache, metric);
+	U16(b2SimplexCache, count);
+	U8(b2SimplexCache, indexA);
+	U8(b2SimplexCache, indexB);
+	
+	T(----------);
+	
+	T(b2DistanceProxy);
+	V(b2DistanceProxy, m_vertices, m_count);
+	I(b2DistanceProxy, m_count);
+	F(b2DistanceProxy, m_radius);
+	
+	AS3_Trace(AS3_String("Creating and stepping a b2World in C++"));
+	b2Vec2 gravity;
+	gravity.Set(0.0f, -10.0f);
+	bool doSleep = true;
+	b2World* m_world = new b2World(gravity, doSleep);
+	m_world->Step(0.05f, 15.0f, 15.0f);
+	delete m_world;
+	AS3_Trace(AS3_String("C++ b2World test done!"));
 	
 	AS3_LibInit(AS3_Object(
 		"emptyFunction:AS3ValType,"

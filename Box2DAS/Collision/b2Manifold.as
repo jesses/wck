@@ -17,19 +17,19 @@
 		
 		public function b2Manifold(p:int) {
 			_ptr = p;
-			m_localPlaneNormal = new b2Vec2(_ptr + 40);
-			m_localPoint = new b2Vec2(_ptr + 48);
-			m_points[0] = new b2ManifoldPoint(_ptr + 0);
-			m_points[1] = new b2ManifoldPoint(_ptr + 20);
+			localPlaneNormal = new b2Vec2(_ptr + 40);
+			localPoint = new b2Vec2(_ptr + 48);
+			points[0] = new b2ManifoldPoint(_ptr + 0);
+			points[1] = new b2ManifoldPoint(_ptr + 20);
 		}
 		
-		public var m_localPlaneNormal:b2Vec2; 
-		public var m_localPoint:b2Vec2;
-		public function get m_type():int { return mem._mrs8(_ptr + 56); }
-		public function set m_type(v:int):void { mem._mw8(_ptr + 56, v); }
-		public function get m_pointCount():int { return mem._mr32(_ptr + 60); }
-		public function set m_pointCount(v:int):void { mem._mw32(_ptr + 60, v); }
-		public var m_points:Array = [];
+		public var localPlaneNormal:b2Vec2; 
+		public var localPoint:b2Vec2;
+		public function get type():int { return mem._mrs8(_ptr + 56); }
+		public function set type(v:int):void { mem._mw8(_ptr + 56, v); }
+		public function get pointCount():int { return mem._mr32(_ptr + 60); }
+		public function set pointCount(v:int):void { mem._mw32(_ptr + 60, v); }
+		public var points:Array = [];
 	
 	}
 }

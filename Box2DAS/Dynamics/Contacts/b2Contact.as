@@ -48,7 +48,7 @@
 		/// Get the contact manifold. Do not set the point count to zero. Instead
 		/// call Disable.
 		/// b2Manifold* GetManifold();
-		public function GetManidold():b2Manifold {
+		public function GetManifold():b2Manifold {
 			return m_manifold;
 		}
 	
@@ -135,14 +135,18 @@
 			m_flags |= e_filterFlag;
 		}
 		
+		public function Update():void {
+			lib.b2Contact_Update(_ptr);
+		}
+		
 		public var m_fixtureA:b2Fixture;
 		public var m_fixtureB:b2Fixture;
 		public var m_manifold:b2Manifold;
 		
 		public function get m_flags():int { return mem._mr32(_ptr + 4); }
 		public function set m_flags(v:int):void { mem._mw32(_ptr + 4, v); }
-		public function get m_toi():Number { return mem._mrf(_ptr + 120); }
-		public function set m_toi(v:Number):void { mem._mwf(_ptr + 120, v); }
+		public function get m_toiCount():Number { return mem._mrf(_ptr + 120); }
+		public function set m_toiCount(v:Number):void { mem._mwf(_ptr + 120, v); }
 		public function get frictionDisabled():Boolean { return mem._mru8(_ptr + 124) == 1; }
 		public function set frictionDisabled(v:Boolean):void { mem._mw8(_ptr + 124, v ? 1 : 0); }
 		public function get m_next():int { return mem._mr32(_ptr + 12); }

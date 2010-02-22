@@ -82,6 +82,11 @@ as3_new_del(b2FrictionJointDef);
 as3_new_del(b2WeldJointDef);
 as3_new_del(b2MassData);
 
+/// And for b2Distance stuff
+
+as3_new_del(b2DistanceInput);
+as3_new_del(b2DistanceOutput);
+as3_new_del(b2SimplexCache);
 
 /// AS3ValType's value tracker. This can be used to get AS3 stuff hanging out in C++ land.
 

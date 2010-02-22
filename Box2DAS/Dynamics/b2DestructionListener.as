@@ -23,19 +23,13 @@
 		/// Called when any joint is about to be destroyed due
 		/// to the destruction of one of its attached bodies.		
 		public function SayGoodbyeJoint(j:b2Joint):void {
-			var ed:IEventDispatcher = j.m_userData as IEventDispatcher;
-			if(ed) {
-				ed.dispatchEvent(new GoodbyeJointEvent(j));
-			}
+			j.dispatchEvent(new GoodbyeJointEvent(j));
 		}
 		
 		/// Called when any fixture is about to be destroyed due
 		/// to the destruction of its parent body.		
 		public function SayGoodbyeFixture(f:b2Fixture):void {
-			var ed:IEventDispatcher = f.m_userData as IEventDispatcher;
-			if(ed) {
-				ed.dispatchEvent(new GoodbyeFixtureEvent(f));
-			}
+			f.dispatchEvent(new GoodbyeFixtureEvent(f));
 		}
 	}
 }
