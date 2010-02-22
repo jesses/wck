@@ -12,7 +12,7 @@ export ACHACKS_TMPS=1
 */
 #include "Box2DAS/Box2D.h";
 
-class WorldListener : public b2ContactListener {
+class WorldListener : public b2ContactListener, public b2DestructionListener {
 public:
 	
 	AS3_Val usr;
@@ -52,6 +52,14 @@ public:
 				(AS3_Val)c->m_fixtureA->m_userData,
 				(AS3_Val)c->m_fixtureB->m_userData, i);
 		}
+	}
+	
+	void SayGoodbye(b2Joint* j) {
+		AS3_Release((AS3_Val)j->m_userData);
+	}
+	
+	void SayGoodbye(b2Fixture* f) {
+		AS3_Release((AS3_Val)f->m_userData);
 	}
 };
 
@@ -96,6 +104,7 @@ AS3_Val b2World_QueryAABB(void* data, AS3_Val args) {
 	aabb.upperBound.y = y2;
 	cb.callback = f;
 	w->QueryAABB(&cb, aabb);
+	AS3_Release(f);
 	return AS3_Null();
 }
 
@@ -110,6 +119,7 @@ AS3_Val b2World_RayCast(void* data, AS3_Val args) {
 	b2Vec2 p2(x2, y2);
 	cb.callback = f;
 	w->RayCast(&cb, p1, p2);
+	AS3_Release(f);
 	return AS3_Null();
 }
 
@@ -123,6 +133,7 @@ AS3_Val b2World_new(void* data, AS3_Val args) {
 	b2World* w = new b2World(g, s == 1);
 	WorldListener* l = new WorldListener();
 	w->SetContactListener(l);
+	w->SetDestructionListener(l);
 	l->usr = usr;
 	return_as3_ptr(w);
 }
@@ -130,7 +141,18 @@ AS3_Val b2World_new(void* data, AS3_Val args) {
 AS3_Val b2World_delete(void* data, AS3_Val args) {
 	b2World* w;
 	AS3_ArrayValue(args, "PtrType", &w);
-	delete (WorldListener*)w->m_destructionListener;
+	for(b2Body* b = w->m_bodyList; b; b = b->m_next) {
+		for(b2Fixture* f = b->m_fixtureList; f; f = f->m_next) {
+			AS3_Release((AS3_Val)f->m_userData);
+		}
+		AS3_Release((AS3_Val)b->m_userData);
+	}
+	for(b2Joint* j = w->m_jointList; j; j = j->m_next) {
+		AS3_Release((AS3_Val)j->m_userData);
+	}
+	WorldListener* l = (WorldListener*)w->m_destructionListener;
+	AS3_Release(l->usr);
+	delete l;
 	delete w;
 	return AS3_Null();
 }
@@ -158,6 +180,7 @@ AS3_Val b2World_DestroyBody(void* data, AS3_Val args) {
 	b2World* w;
 	b2Body* b;
 	AS3_ArrayValue(args, "PtrType, PtrType", &w, &b);
+	AS3_Release((AS3_Val)b->m_userData);
 	w->DestroyBody(b);
 	return AS3_Null();
 }
@@ -176,6 +199,7 @@ AS3_Val b2World_DestroyJoint(void* data, AS3_Val args) {
 	b2World* w;
 	b2Joint* j;
 	AS3_ArrayValue(args, "PtrType, PtrType", &w, &j);
+	AS3_Release((AS3_Val)j->m_userData);
 	w->DestroyJoint(j);
 	return AS3_Null();
 }
@@ -194,6 +218,7 @@ AS3_Val b2Body_DestroyFixture(void* data, AS3_Val args) {
 	b2Body* b;
 	b2Fixture* f;
 	AS3_ArrayValue(args, "PtrType, PtrType", &b, &f);
+	AS3_Release((AS3_Val)f->m_userData);
 	b->DestroyFixture(f);
 	return AS3_Null();
 }
@@ -277,29 +302,6 @@ AS3_Val b2PolygonShape_Decompose(void* data, AS3_Val args) {
 	}
 	return AS3_Null();
 }
-
-/*void b2Polygon::AddTo(b2PolygonDef& pd) {
-	if (nVertices < 3) return;
-	
-    b2Vec2* vecs = GetVertexVecs();
-	b2Assert(nVertices <= b2_maxPolygonVertices);
-//	printf("Adding...\n");
-	int32 offset = 0;
-    for (int32 i = 0; i < nVertices; ++i) {
-		//Omit identical neighbors (including wraparound)
-		int32 ind = i - offset;
-		if (vecs[i].x==vecs[remainder(i+1,nVertices)].x &&
-			vecs[i].y==vecs[remainder(i+1,nVertices)].y){
-				offset++;
-				continue;
-		}
-		pd.vertices[ind] = vecs[i];
-//		printf("%f, %f\n",vecs[i].x,vecs[i].y);
-    }
-//	print();
-	pd.vertexCount = nVertices-offset;
-    delete[] vecs;
-}*/
 
 
 int main() {
