@@ -17,7 +17,6 @@
 	import flash.text.*;
 	import flash.geom.*;
 	import flash.ui.*;
-	import fl.motion.*;
 	
 	/**
 	 * Provides radial gravity.

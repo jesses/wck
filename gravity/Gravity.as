@@ -16,7 +16,6 @@
 	import flash.text.*;
 	import flash.geom.*;
 	import flash.ui.*;
-	import fl.motion.*;
 	
 	/**
 	 * Base class for gravity objects that can be dropped into a world. Gravity will be

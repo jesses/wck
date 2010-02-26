@@ -140,6 +140,14 @@
 			return x * b.x + y * b.y;
 		}
 		
+		public function perpDot(b:V2):Number {
+			return -y * b.x + x * b.y;
+		}
+		
+		public function winding(b:V2, c:V2):Number {
+			return V2.subtract(b, this).perpDot(V2.subtract(c, b)); // < 0 = right > 0 = left
+		}
+		
 		public function cross(b:V2):Number {
 			return x * b.y - y * b.x;
 		}

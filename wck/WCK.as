@@ -16,7 +16,6 @@
 	import flash.text.*;
 	import flash.geom.*;
 	import flash.ui.*;
-	import fl.motion.*;
 	
 	/**
 	 * A base document class for WCK based Flash SWFs

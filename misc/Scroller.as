@@ -6,7 +6,6 @@
 	import flash.utils.*;
 	import flash.geom.*;
 	import flash.ui.*;
-	import fl.transitions.easing.*;
 	
 	/**
 	 * A simple class to handle level / world scrolling, such as in sidescrollers. movement occurs by setting a "focus"
@@ -102,7 +101,7 @@
 		 */
 		public function startFocusTween(frames:uint = 30, func:Function = null):void {
 			if(func  == null) {
-				func = None.easeNone;
+				func = Util.linearEase;
 			}
 			tFramesTot = frames;
 			tFrames = 0;

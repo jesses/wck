@@ -16,7 +16,6 @@
 	import flash.text.*;
 	import flash.geom.*;
 	import flash.ui.*;
-	import fl.motion.*;
 	
 	/**
 	 * Buffers contacts for processing before / after a timestep, all at once. Helpful if you need to analyze all
@@ -103,5 +102,23 @@
 		public override function filter(o:*):Boolean {
 			return contactEventFilter.filter(o as ContactEvent);
 		}
+		
+		/**
+		 * Apply an impulse to the other body involved in every contact.
+		 */
+		public function applyImpulse(base:Number, massFactor:Number = 0):void {
+			forEach(function(k:Array, e:ContactEvent):void {
+				e.applyImpulse(base, massFactor);
+			});
+		}
+
+		/**
+		 * Apply a force to the other body involved in every contact.
+		 */
+		public function applyForce(base:Number, massFactor:Number = 0):void {
+			forEach(function(k:Array, e:ContactEvent):void {
+				e.applyForce(base, massFactor);
+			});
+		}		
 	}
 }
