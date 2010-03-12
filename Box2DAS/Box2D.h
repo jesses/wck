@@ -410,10 +410,6 @@ AS3_Val b2Distance(void* data, AS3_Val args) {
 	return AS3_Null();
 }
 
-AS3_Val b2WorldExport(b2World* w) {
-	
-}
-
 
 
 

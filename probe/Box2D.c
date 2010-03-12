@@ -243,6 +243,7 @@ int main() {
 	I(b2Body, m_userData);
 	C(b2Body, m_contactList, b2ContactEdge);
 	C(b2Body, m_jointList, b2JointEdge);
+	F(b2Body, m_inertiaScale);
 	
 	T(----------);
 	
@@ -654,11 +655,11 @@ int main() {
 	delete m_world;
 	AS3_Trace(AS3_String("C++ b2World test done!"));
 	
-	AS3_LibInit(AS3_Object(
-		"emptyFunction:AS3ValType,"
-		"testFunction:AS3ValType",
-		AS3F(emptyFunction),
-		AS3F(testFunction)
-	));
+	AS3_Val core = b2Core();
+	AS3_SetS(core, "emptyFunction", AS3F(emptyFunction));
+	AS3_SetS(core, "testFunction", AS3F(testFunction));
+	
+	AS3_LibInit(core);
+	
 	return 0;
 }
