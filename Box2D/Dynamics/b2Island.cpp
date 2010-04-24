@@ -248,7 +248,11 @@ void b2Island::Solve(const b2TimeStep& step, const b2Vec2& gravity, bool allowSl
 		{
 			continue;
 		}
-
+		
+		/// AS3 - skip this check for kinematic bodies.
+		if(b->GetType() != b2_kinematicBody) {
+		/// END AS3
+		
 		// Check for large velocities.
 		b2Vec2 translation = step.dt * b->m_linearVelocity;
 		if (b2Dot(translation, translation) > b2_maxTranslationSquared)
@@ -269,6 +273,10 @@ void b2Island::Solve(const b2TimeStep& step, const b2Vec2& gravity, bool allowSl
 				b->m_angularVelocity = step.inv_dt * b2_maxRotation;
 			}
 		}
+		
+		/// AS3
+		}
+		/// END AS3
 
 		// Store positions for continuous collision.
 		b->m_sweep.c0 = b->m_sweep.c;
