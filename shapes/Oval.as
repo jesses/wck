@@ -1,1 +1,1 @@
-﻿package shapes {		import wck.*;		public class Oval extends BodyShape {			public override function shapes():void {			oval();		}	}}
+﻿package shapes {		import wck.*;		public class Oval extends ShapeBase {			public override function shapes():void {			oval();		}	}}

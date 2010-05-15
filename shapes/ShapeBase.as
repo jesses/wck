@@ -1,0 +1,1 @@
+﻿package shapes {		import wck.*;		/**	 * An empty base class for shapes. You can define your own ShapeBase class if you need common functionality	 * shared between all the shapes.* classes, or just add your code here.	 */	public class ShapeBase extends BodyShape {}}

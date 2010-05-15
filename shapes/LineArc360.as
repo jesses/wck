@@ -2,7 +2,7 @@
 	
 	import wck.*;
 	
-	public class LineArc360 extends BodyShape {
+	public class LineArc360 extends ShapeBase {
 	
 		public override function shapes():void {
 			lineArc(360);

@@ -1,1 +1,1 @@
-﻿package shapes {		import wck.*;		public class Triangle extends BodyShape {			public override function shapes():void {			triangle();		}	}}
+﻿package shapes {		import wck.*;		public class Triangle extends ShapeBase {			public override function shapes():void {			triangle();		}	}}

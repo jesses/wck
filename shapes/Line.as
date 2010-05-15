@@ -2,7 +2,7 @@
 	
 	import wck.*;
 	
-	public class Line extends BodyShape {
+	public class Line extends ShapeBase {
 	
 		public override function shapes():void {
 			line();

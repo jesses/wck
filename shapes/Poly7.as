@@ -2,7 +2,7 @@
 	
 	import wck.*;
 	
-	public class Poly7 extends BodyShape {
+	public class Poly7 extends ShapeBase {
 	
 		public override function shapes():void {
 			polyN(7);

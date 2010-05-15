@@ -2,7 +2,7 @@
 	
 	import wck.*;
 	
-	public class Arc90 extends BodyShape {
+	public class Arc90 extends ShapeBase {
 	
 		public override function shapes():void {
 			arc(90);
