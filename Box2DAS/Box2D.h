@@ -174,10 +174,12 @@ public:
 	AS3_Val callback;
 	
 	float32 ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) {
-		return AS3_NumberValue(AS3_CallT(
-			callback, NULL, 
+		AS3_Val v = AS3_CallT(callback, NULL, 
 			"AS3ValType, DoubleType, DoubleType, DoubleType, DoubleType, DoubleType",
-			(AS3_Val)fixture->m_userData, point.x, point.y, normal.x, normal.y, fraction));
+			(AS3_Val)fixture->m_userData, point.x, point.y, normal.x, normal.y, fraction);
+		float32 f = AS3_NumberValue(v);
+		AS3_Release(v);
+		return f;
 	}
 };
 
