@@ -33,6 +33,13 @@ b2Fixture::b2Fixture()
 	m_proxyId = b2BroadPhase::e_nullProxy;
 	m_shape = NULL;
 	m_density = 0.0f;
+	
+	/// AS3
+	m_reportBeginContact = false;
+	m_reportEndContact = false;
+	m_reportPreSolve = false;
+	m_reportPostSolve = false;	
+	/// END AS3
 }
 
 b2Fixture::~b2Fixture()
