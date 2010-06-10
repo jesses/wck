@@ -274,6 +274,12 @@ AS3_Val b2World_DestroyBody(void* data, AS3_Val args) {
 	b2Body* b;
 	AS3_ArrayValue(args, "PtrType, PtrType", &w, &b);
 	AS3_Release((AS3_Val)b->m_userData);
+	for(b2Fixture* f = b->m_fixtureList; f; f = f->m_next) {
+		AS3_Release((AS3_Val)f->m_userData);
+	}
+	for(b2JointEdge* j = b->m_jointList; j; j = j->next) {
+		AS3_Release((AS3_Val)j->joint->m_userData);
+	}
 	w->DestroyBody(b);
 	return AS3_Null();
 }
