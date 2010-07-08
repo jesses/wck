@@ -1,11 +1,23 @@
 K 25
 svn:wc:ra_dav:version-url
-V 34
-/svn/!svn/ver/29/trunk/Box2D/Box2D
+V 35
+/svn/!svn/ver/116/trunk/Box2D/Box2D
+END
+Box2DConfig.cmake
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/59/trunk/Box2D/Box2D/Box2DConfig.cmake
 END
 Box2D.h
 K 25
 svn:wc:ra_dav:version-url
-V 42
-/svn/!svn/ver/28/trunk/Box2D/Box2D/Box2D.h
+V 43
+/svn/!svn/ver/110/trunk/Box2D/Box2D/Box2D.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/114/trunk/Box2D/Box2D/CMakeLists.txt
 END

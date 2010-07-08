@@ -4,6 +4,7 @@
 #include "Box2D/Box2D.h";
 #include "Box2D/Collision/b2BroadPhase.cpp";
 #include "Box2D/Collision/b2CollideCircle.cpp";
+#include "Box2D/Collision/b2CollideEdge.cpp";
 #include "Box2D/Collision/b2CollidePolygon.cpp";
 #include "Box2D/Collision/b2Collision.cpp";
 #include "Box2D/Collision/b2Distance.cpp";
@@ -11,6 +12,8 @@
 #include "Box2D/Collision/b2TimeOfImpact.cpp";
 #include "Box2D/Collision/Shapes/b2CircleShape.cpp";
 #include "Box2D/Collision/Shapes/b2PolygonShape.cpp";
+#include "Box2D/Collision/Shapes/b2LoopShape.cpp";
+#include "Box2D/Collision/Shapes/b2EdgeShape.cpp";
 #include "Box2D/Common/b2BlockAllocator.cpp";
 #include "Box2D/Common/b2Math.cpp";
 #include "Box2D/Common/b2Settings.cpp";
@@ -24,6 +27,10 @@
 #include "Box2D/Dynamics/Contacts/b2CircleContact.cpp";
 #include "Box2D/Dynamics/Contacts/b2Contact.cpp";
 #include "Box2D/Dynamics/Contacts/b2ContactSolver.cpp";
+#include "Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.cpp";
+#include "Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.cpp";
+#include "Box2D/Dynamics/Contacts/b2LoopAndCircleContact.cpp";
+#include "Box2D/Dynamics/Contacts/b2LoopAndPolygonContact.cpp";
 #include "Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.cpp";
 #include "Box2D/Dynamics/Contacts/b2PolygonContact.cpp";
 #include "Box2D/Dynamics/Joints/b2DistanceJoint.cpp";
@@ -87,6 +94,11 @@ as3_new_del(b2MassData);
 as3_new_del(b2DistanceInput);
 as3_new_del(b2DistanceOutput);
 as3_new_del(b2SimplexCache);
+
+/// New shape types
+
+as3_new_del(b2EdgeShape);
+as3_new_del(b2LoopShape);
 
 /// AS3ValType's value tracker. This can be used to get AS3 stuff hanging out in C++ land.
 
@@ -378,6 +390,13 @@ AS3_Val b2Contact_Update(void* data, AS3_Val args) {
 	return AS3_Null();
 }
 
+AS3_Val b2Contact_Evaluate(void* data, AS3_Val args) {
+	b2Contact* c;
+	AS3_ArrayValue(args, "PtrType", &c);
+	c->Evaluate(&c->m_manifold, c->m_fixtureA->m_body->m_xf, c->m_fixtureB->m_body->m_xf);
+	return AS3_Null();
+}
+
 AS3_Val b2PolygonShape_Decompose(void* data, AS3_Val args) {
 	b2Polygon p;
 	b2Polygon results[100];
@@ -418,6 +437,18 @@ AS3_Val b2Distance(void* data, AS3_Val args) {
 	return AS3_Null();
 }
 
+AS3_Val b2Vec2Array_new(void* data, AS3_Val args) {
+	int l;
+	AS3_ArrayValue(args, "IntType", &l);
+	return_as3_ptr(new b2Vec2[l]);
+}
+
+AS3_Val b2Vec2Array_delete(void* data, AS3_Val args) {
+	b2Vec2 *v;
+	AS3_ArrayValue(args, "PtrType", &v);
+	delete [] v;
+	return AS3_Null();
+}
 
 
 
@@ -489,6 +520,7 @@ AS3_Val b2Core() {
 		"b2MassData_delete:AS3ValType,"
 		
 		"b2Contact_Update:AS3ValType,"
+		"b2Contact_Evaluate:AS3ValType,"
 		
 		"b2PolygonShape_Decompose:AS3ValType,"
 		
@@ -501,7 +533,16 @@ AS3_Val b2Core() {
 		"b2SimplexCache_new:AS3ValType,"
 		"b2SimplexCache_delete:AS3ValType,"
 		
-		"b2Distance:AS3ValType",
+		"b2Distance:AS3ValType,"
+		
+		"b2EdgeShape_new:AS3ValType,"
+		"b2EdgeShape_delete:AS3ValType,"
+		
+		"b2LoopShape_new:AS3ValType,"
+		"b2LoopShape_delete:AS3ValType,"
+		
+		"b2Vec2Array_new:AS3ValType,"
+		"b2Vec2Array_delete:AS3ValType",
 		
 		AS3F(b2World_new),
 		AS3F(b2World_Step),
@@ -565,6 +606,7 @@ AS3_Val b2Core() {
 		AS3F(b2MassData_delete),
 		
 		AS3F(b2Contact_Update),
+		AS3F(b2Contact_Evaluate),
 		
 		AS3F(b2PolygonShape_Decompose),
 		
@@ -577,7 +619,17 @@ AS3_Val b2Core() {
 		AS3F(b2SimplexCache_new),
 		AS3F(b2SimplexCache_delete),
 		
-		AS3F(b2Distance)		
+		AS3F(b2Distance),
+		
+		AS3F(b2EdgeShape_new),
+		AS3F(b2EdgeShape_delete),
+		
+		AS3F(b2LoopShape_new),
+		AS3F(b2LoopShape_delete),
+		
+		AS3F(b2Vec2Array_new),
+		AS3F(b2Vec2Array_delete)
+		
 	);
 }
 

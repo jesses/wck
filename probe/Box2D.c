@@ -121,7 +121,8 @@ int main() {
 	C(b2Sweep, c, b2Vec2);
 	F(b2Sweep, a0);
 	F(b2Sweep, a);
-	F(b2Sweep, t0);
+	//F(b2Sweep, t0); // !!!
+	F(b2Sweep, alpha0);
 
 	T(----------);
 	
@@ -160,35 +161,41 @@ int main() {
 	
 	T(b2ContactID);
 	I(b2ContactID, key);
-	U8(b2ContactID, features.referenceEdge);
-	U8(b2ContactID, features.incidentEdge);
-	U8(b2ContactID, features.incidentVertex);
-	U8(b2ContactID, features.flip);
+	//U8(b2ContactID, features.referenceEdge); // !!!
+	//U8(b2ContactID, features.incidentEdge); // !!!
+	//U8(b2ContactID, features.incidentVertex); // !!!
+	//U8(b2ContactID, features.flip); // !!!
+	U8(b2ContactID, cf.indexA);
+	U8(b2ContactID, cf.indexB);
+	U8(b2ContactID, cf.typeA);
+	U8(b2ContactID, cf.typeB);
 	
 	T(----------);
 	
 	T(b2ManifoldPoint);
-	C(b2ManifoldPoint, m_localPoint, b2Vec2);
-	F(b2ManifoldPoint, m_normalImpulse);
-	F(b2ManifoldPoint, m_tangentImpulse);
-	C(b2ManifoldPoint, m_id, b2ContactID);
+	C(b2ManifoldPoint, localPoint, b2Vec2); // !!!
+	F(b2ManifoldPoint, normalImpulse); // !!!
+	F(b2ManifoldPoint, tangentImpulse); // !!!
+	C(b2ManifoldPoint, id, b2ContactID); // !!!
+	B(b2ManifoldPoint, isNew); // !!!
 	
 	T(----------);
 	
 	T(b2Manifold);
-	C(b2Manifold, m_localPlaneNormal, b2Vec2);
-	C(b2Manifold, m_localPoint, b2Vec2);
-	S8(b2Manifold, m_type);
-	I(b2Manifold, m_pointCount);
-	C(b2Manifold, m_points[0], b2ManifoldPoint);
-	C(b2Manifold, m_points[1], b2ManifoldPoint);
+	//C(b2Manifold, localPlaneNormal, b2Vec2); // !!!
+	C(b2Manifold, localNormal, b2Vec2);	
+	C(b2Manifold, localPoint, b2Vec2); // !!!
+	S8(b2Manifold, type); // !!!
+	I(b2Manifold, pointCount); // !!!
+	C(b2Manifold, points[0], b2ManifoldPoint); // !!!
+	C(b2Manifold, points[1], b2ManifoldPoint); // !!!
 	
 	T(----------);
 	
 	T(b2WorldManifold);
-	C(b2WorldManifold, m_normal, b2Vec2);
-	C(b2WorldManifold, m_points[0], b2Vec2);
-	C(b2WorldManifold, m_points[1], b2Vec2);
+	C(b2WorldManifold, normal, b2Vec2); // !!!
+	C(b2WorldManifold, points[0], b2Vec2); // !!!
+	C(b2WorldManifold, points[1], b2Vec2); // !!!
 	
 	T(----------);
 	
@@ -197,6 +204,9 @@ int main() {
 	R(b2Contact, m_fixtureA, b2Fixture);
 	R(b2Contact, m_fixtureB, b2Fixture);
 	C(b2Contact, m_manifold, b2Manifold);
+	I(b2Contact, m_indexA);
+	I(b2Contact, m_indexB);
+	I(b2Contact, m_toiCount);
 	F(b2Contact, m_toi);
 	B(b2Contact, frictionDisabled);
 	I(b2Contact, m_next);
@@ -243,7 +253,7 @@ int main() {
 	I(b2Body, m_userData);
 	C(b2Body, m_contactList, b2ContactEdge);
 	C(b2Body, m_jointList, b2JointEdge);
-	F(b2Body, m_inertiaScale);
+	// F(b2Body, m_inertiaScale); // !!!
 	
 	T(----------);
 	
@@ -299,17 +309,24 @@ int main() {
 	B(b2Fixture, m_reportEndContact);
 	B(b2Fixture, m_reportPreSolve);
 	B(b2Fixture, m_reportPostSolve);
-	C(b2Fixture, m_aabb, b2AABB);
+	// C(b2Fixture, m_aabb, b2AABB); // !!!
 	R(b2Fixture, m_body, b2Body);
 	R(b2Fixture, m_shape, b2Shape);
 	F(b2Fixture, m_friction);
 	F(b2Fixture, m_restitution);
-	I(b2Fixture, m_proxyId);
+	// I(b2Fixture, m_proxyId); // !!!
+	I(b2Fixture, m_proxies);
 	C(b2Fixture, m_filter, b2Filter);
 	B(b2Fixture, m_isSensor);
 	I(b2Fixture, m_userData);
 	F(b2Fixture, m_density);
 	F(b2Fixture, m_conveyorBeltSpeed);
+	
+	T(----------);
+	
+	T(b2FixtureProxy);
+	C(b2FixtureProxy, aabb, b2AABB);
+	I(b2FixtureProxy, proxyId);
 	
 	T(----------);
 	
@@ -645,6 +662,23 @@ int main() {
 	V(b2DistanceProxy, m_vertices, m_count);
 	I(b2DistanceProxy, m_count);
 	F(b2DistanceProxy, m_radius);
+
+	T(----------);
+	
+	T(b2EdgeShape);
+	C(b2EdgeShape, m_vertex0, b2Vec2);
+	C(b2EdgeShape, m_vertex1, b2Vec2);
+	C(b2EdgeShape, m_vertex2, b2Vec2);
+	C(b2EdgeShape, m_vertex3, b2Vec2);
+	B(b2EdgeShape, m_hasVertex0);
+	B(b2EdgeShape, m_hasVertex3);
+
+	T(----------);
+	
+	T(b2LoopShape);
+	V(b2LoopShape, m_vertices, m_count);
+	I(b2LoopShape, m_count);
+	
 	
 	AS3_Trace(AS3_String("Creating and stepping a b2World in C++"));
 	b2Vec2 gravity;

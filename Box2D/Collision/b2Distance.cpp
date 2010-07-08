@@ -18,12 +18,14 @@
 
 #include <Box2D/Collision/b2Distance.h>
 #include <Box2D/Collision/Shapes/b2CircleShape.h>
+#include <Box2D/Collision/Shapes/b2EdgeShape.h>
+#include <Box2D/Collision/Shapes/b2LoopShape.h>
 #include <Box2D/Collision/Shapes/b2PolygonShape.h>
 
 // GJK using Voronoi regions (Christer Ericson) and Barycentric coordinates.
 int32 b2_gjkCalls, b2_gjkIters, b2_gjkMaxIters;
 
-void b2DistanceProxy::Set(const b2Shape* shape)
+void b2DistanceProxy::Set(const b2Shape* shape, int32 index)
 {
 	switch (shape->GetType())
 	{
@@ -42,6 +44,36 @@ void b2DistanceProxy::Set(const b2Shape* shape)
 			m_vertices = polygon->m_vertices;
 			m_count = polygon->m_vertexCount;
 			m_radius = polygon->m_radius;
+		}
+		break;
+
+	case b2Shape::e_loop:
+		{
+			const b2LoopShape* loop = (b2LoopShape*)shape;
+			b2Assert(0 <= index && index < loop->m_count);
+
+			m_buffer[0] = loop->m_vertices[index];
+			if (index + 1 < loop->m_count)
+			{
+				m_buffer[1] = loop->m_vertices[index + 1];
+			}
+			else
+			{
+				m_buffer[1] = loop->m_vertices[0];
+			}
+
+			m_vertices = m_buffer;
+			m_count = 2;
+			m_radius = loop->m_radius;
+		}
+		break;
+
+	case b2Shape::e_edge:
+		{
+			const b2EdgeShape* edge = (b2EdgeShape*)shape;
+			m_vertices = &edge->m_vertex1;
+			m_count = 2;
+			m_radius = edge->m_radius;
 		}
 		break;
 
@@ -67,7 +99,7 @@ struct b2Simplex
 					const b2DistanceProxy* proxyA, const b2Transform& transformA,
 					const b2DistanceProxy* proxyB, const b2Transform& transformB)
 	{
-		b2Assert(0 <= cache->count && cache->count <= 3);
+		b2Assert(cache->count <= 3);
 		
 		// Copy data from cache.
 		m_count = cache->count;

@@ -25,8 +25,10 @@ package Box2DAS.Common {
 		public function set a0(v:Number):void { mem._mwf(_ptr + 24, v); }
 		public function get a():Number { return mem._mrf(_ptr + 28); }
 		public function set a(v:Number):void { mem._mwf(_ptr + 28, v); }
-		public function get t0():Number { return mem._mrf(_ptr + 32); }
-		public function set t0(v:Number):void { mem._mwf(_ptr + 32, v); }
+		//public function get t0():Number { return mem._mrf(_ptr + 32); }
+		//public function set t0(v:Number):void { mem._mwf(_ptr + 32, v); }
+		public function get alpha0():Number { return mem._mrf(_ptr + 32); }
+		public function set alpha0(v:Number):void { mem._mwf(_ptr + 32, v); }
 	
 	}
 }

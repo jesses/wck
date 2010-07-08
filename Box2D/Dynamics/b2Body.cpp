@@ -61,7 +61,6 @@ b2Body::b2Body(const b2BodyDef* bd, b2World* world)
 	m_xf.R.Set(bd->angle);
 
 	m_sweep.localCenter.SetZero();
-	m_sweep.t0 = 1.0f;
 	m_sweep.a0 = m_sweep.a = bd->angle;
 	m_sweep.c0 = m_sweep.c = b2Mul(m_xf, m_sweep.localCenter);
 
@@ -96,8 +95,6 @@ b2Body::b2Body(const b2BodyDef* bd, b2World* world)
 
 	m_I = 0.0f;
 	m_invI = 0.0f;
-
-	m_inertiaScale = bd->inertiaScale;
 
 	m_userData = bd->userData;
 
@@ -156,7 +153,7 @@ b2Fixture* b2Body::CreateFixture(const b2FixtureDef* def)
 	if (m_flags & e_activeFlag)
 	{
 		b2BroadPhase* broadPhase = &m_world->m_contactManager.m_broadPhase;
-		fixture->CreateProxy(broadPhase, m_xf);
+		fixture->CreateProxies(broadPhase, m_xf);
 	}
 
 	fixture->m_next = m_fixtureList;
@@ -238,13 +235,8 @@ void b2Body::DestroyFixture(b2Fixture* fixture)
 
 	if (m_flags & e_activeFlag)
 	{
-		b2Assert(fixture->m_proxyId != b2BroadPhase::e_nullProxy);
 		b2BroadPhase* broadPhase = &m_world->m_contactManager.m_broadPhase;
-		fixture->DestroyProxy(broadPhase);
-	}
-	else
-	{
-		b2Assert(fixture->m_proxyId == b2BroadPhase::e_nullProxy);
+		fixture->DestroyProxies(broadPhase);
 	}
 
 	fixture->Destroy(allocator);
@@ -271,6 +263,7 @@ void b2Body::ResetMassData()
 	// Static and kinematic bodies have zero mass.
 	if (m_type == b2_staticBody || m_type == b2_kinematicBody)
 	{
+		m_sweep.c0 = m_sweep.c = m_xf.position;
 		return;
 	}
 
@@ -309,7 +302,6 @@ void b2Body::ResetMassData()
 	{
 		// Center the inertia about the center of mass.
 		m_I -= m_mass * b2Dot(center, center);
-		m_I *= m_inertiaScale;
 		b2Assert(m_I > 0.0f);
 		m_invI = 1.0f / m_I;
 
@@ -357,6 +349,7 @@ void b2Body::SetMassData(const b2MassData* massData)
 	if (massData->I > 0.0f && (m_flags & b2Body::e_fixedRotationFlag) == 0)
 	{
 		m_I = massData->I - m_mass * b2Dot(massData->center, massData->center);
+		b2Assert(m_I > 0.0f);
 		m_invI = 1.0f / m_I;
 	}
 
@@ -443,7 +436,7 @@ void b2Body::SetActive(bool flag)
 		b2BroadPhase* broadPhase = &m_world->m_contactManager.m_broadPhase;
 		for (b2Fixture* f = m_fixtureList; f; f = f->m_next)
 		{
-			f->CreateProxy(broadPhase, m_xf);
+			f->CreateProxies(broadPhase, m_xf);
 		}
 
 		// Contacts are created the next time step.
@@ -456,7 +449,7 @@ void b2Body::SetActive(bool flag)
 		b2BroadPhase* broadPhase = &m_world->m_contactManager.m_broadPhase;
 		for (b2Fixture* f = m_fixtureList; f; f = f->m_next)
 		{
-			f->DestroyProxy(broadPhase);
+			f->DestroyProxies(broadPhase);
 		}
 
 		// Destroy the attached contacts.

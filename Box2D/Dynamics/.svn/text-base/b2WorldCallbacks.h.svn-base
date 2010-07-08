@@ -27,7 +27,6 @@ class b2Fixture;
 class b2Body;
 class b2Joint;
 class b2Contact;
-struct b2ContactPoint;
 struct b2ContactResult;
 struct b2Manifold;
 
@@ -58,9 +57,6 @@ public:
 	/// Return true if contact calculations should be performed between these two shapes.
 	/// @warning for performance reasons this is only called when the AABBs begin to overlap.
 	virtual bool ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB);
-
-	/// Return true if the given shape should be considered for ray intersection
-	virtual bool RayCollide(void* userData, b2Fixture* fixture);
 };
 
 /// Contact impulses for reporting. Impulses are used instead of forces because
@@ -140,15 +136,16 @@ class b2RayCastCallback
 public:
 	virtual ~b2RayCastCallback() {}
 
-	/// Called for each fixture found in the query. You control how the ray proceeds
-	/// by returning a float that indicates the fractional length of the ray. By returning
-	/// 0, you set the ray length to zero. By returning the current fraction, you proceed
-	/// to find the closest point. By returning 1, you continue with the original ray
-	/// clipping.
+	/// Called for each fixture found in the query. You control how the ray cast
+	/// proceeds by returning a float:
+	/// return -1: ignore this fixture and continue
+	/// return 0: terminate the ray cast
+	/// return fraction: clip the ray to this point
+	/// return 1: don't clip the ray and continue
 	/// @param fixture the fixture hit by the ray
 	/// @param point the point of initial intersection
 	/// @param normal the normal vector at the point of intersection
-	/// @return 0 to terminate, fraction to clip the ray for
+	/// @return -1 to filter, 0 to terminate, fraction to clip the ray for
 	/// closest hit, 1 to continue
 	virtual float32 ReportFixture(	b2Fixture* fixture, const b2Vec2& point,
 									const b2Vec2& normal, float32 fraction) = 0;

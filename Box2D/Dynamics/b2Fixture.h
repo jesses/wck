@@ -26,6 +26,7 @@
 class b2BlockAllocator;
 class b2Body;
 class b2BroadPhase;
+class b2Fixture;
 
 /// This holds contact filtering data.
 struct b2Filter
@@ -87,6 +88,14 @@ struct b2FixtureDef
 	b2Filter filter;
 };
 
+/// This proxy is used internally to connect fixtures to the broad-phase.
+struct b2FixtureProxy
+{
+	b2AABB aabb;
+	b2Fixture* fixture;
+	int32 childIndex;
+	int32 proxyId;
+};
 
 /// A fixture is used to attach a shape to a body for collision detection. A fixture
 /// inherits its transform from its parent. Fixtures hold additional non-geometric data
@@ -103,13 +112,14 @@ public:
 	bool m_reportPreSolve;
 	bool m_reportPostSolve;
 	// END AS3
-
+	
 	/// Get the type of the child shape. You can use this to down cast to the concrete shape.
 	/// @return the shape type.
 	b2Shape::Type GetType() const;
 
 	/// Get the child shape. You can modify the child shape, however you should not change the
 	/// number of vertices because this will crash some collision caching mechanisms.
+	/// Manipulating the shape may lead to non-physical behavior.
 	b2Shape* GetShape();
 	const b2Shape* GetShape() const;
 
@@ -139,7 +149,7 @@ public:
 
 	/// Get the user data that was assigned in the fixture definition. Use this to
 	/// store your application specific data.
-	void* GetUserData();
+	void* GetUserData() const;
 
 	/// Set the user data. Use this to store your application specific data.
 	void SetUserData(void* data);
@@ -152,7 +162,7 @@ public:
 	/// Cast a ray against this shape.
 	/// @param output the ray-cast results.
 	/// @param input the ray-cast input parameters.
-	bool RayCast(b2RayCastOutput* output, const b2RayCastInput& input) const;
+	bool RayCast(b2RayCastOutput* output, const b2RayCastInput& input, int32 childIndex) const;
 
 	/// Get the mass data for this fixture. The mass data is based on the density and
 	/// the shape. The rotational inertia is about the shape's origin. This operation
@@ -181,7 +191,7 @@ public:
 	/// Get the fixture's AABB. This AABB may be enlarge and/or stale.
 	/// If you need a more accurate AABB, compute it using the shape and
 	/// the body transform.
-	const b2AABB& GetAABB() const;
+	const b2AABB& GetAABB(int32 childIndex) const;
 
 public:
 
@@ -199,12 +209,10 @@ public:
 	void Destroy(b2BlockAllocator* allocator);
 
 	// These support body activation/deactivation.
-	void CreateProxy(b2BroadPhase* broadPhase, const b2Transform& xf);
-	void DestroyProxy(b2BroadPhase* broadPhase);
+	void CreateProxies(b2BroadPhase* broadPhase, const b2Transform& xf);
+	void DestroyProxies(b2BroadPhase* broadPhase);
 
 	void Synchronize(b2BroadPhase* broadPhase, const b2Transform& xf1, const b2Transform& xf2);
-
-	b2AABB m_aabb;
 
 	float32 m_density;
 
@@ -216,7 +224,9 @@ public:
 	float32 m_friction;
 	float32 m_restitution;
 
-	int32 m_proxyId;
+	b2FixtureProxy* m_proxies;
+	int32 m_proxyCount;
+
 	b2Filter m_filter;
 
 	bool m_isSensor;
@@ -253,7 +263,7 @@ inline const b2Filter& b2Fixture::GetFilterData() const
 	return m_filter;
 }
 
-inline void* b2Fixture::GetUserData()
+inline void* b2Fixture::GetUserData() const
 {
 	return m_userData;
 }
@@ -319,9 +329,9 @@ inline bool b2Fixture::TestPoint(const b2Vec2& p) const
 	return m_shape->TestPoint(m_body->GetTransform(), p);
 }
 
-inline bool b2Fixture::RayCast(b2RayCastOutput* output, const b2RayCastInput& input) const
+inline bool b2Fixture::RayCast(b2RayCastOutput* output, const b2RayCastInput& input, int32 childIndex) const
 {
-	return m_shape->RayCast(output, input, m_body->GetTransform());
+	return m_shape->RayCast(output, input, m_body->GetTransform(), childIndex);
 }
 
 inline void b2Fixture::GetMassData(b2MassData* massData) const
@@ -329,9 +339,10 @@ inline void b2Fixture::GetMassData(b2MassData* massData) const
 	m_shape->ComputeMass(massData, m_density);
 }
 
-inline const b2AABB& b2Fixture::GetAABB() const
+inline const b2AABB& b2Fixture::GetAABB(int32 childIndex) const
 {
-	return m_aabb;
+	b2Assert(0 <= childIndex && childIndex < m_proxyCount);
+	return m_proxies[childIndex].aabb;
 }
 
 #endif

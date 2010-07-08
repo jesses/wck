@@ -31,6 +31,9 @@ public:
 	/// Implement b2Shape.
 	b2Shape* Clone(b2BlockAllocator* allocator) const;
 
+	/// @see b2Shape::GetChildCount
+	int32 GetChildCount() const;
+
 	/// Copy vertices. This assumes the vertices define a convex polygon.
 	/// It is assumed that the exterior is the the right of each edge.
 	void Set(const b2Vec2* vertices, int32 vertexCount);
@@ -54,19 +57,20 @@ public:
 	bool TestPoint(const b2Transform& transform, const b2Vec2& p) const;
 
 	/// Implement b2Shape.
-	bool RayCast(b2RayCastOutput* output, const b2RayCastInput& input, const b2Transform& transform) const;
+	bool RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
+					const b2Transform& transform, int32 childIndex) const;
 
 	/// @see b2Shape::ComputeAABB
-	void ComputeAABB(b2AABB* aabb, const b2Transform& transform) const;
+	void ComputeAABB(b2AABB* aabb, const b2Transform& transform, int32 childIndex) const;
 
 	/// @see b2Shape::ComputeMass
 	void ComputeMass(b2MassData* massData, float32 density) const;
 
 	/// Get the supporting vertex index in the given direction.
-	int32 GetSupport(const b2Vec2& d) const;
+	//int32 GetSupport(const b2Vec2& d) const;
 
 	/// Get the supporting vertex in the given direction.
-	const b2Vec2& GetSupportVertex(const b2Vec2& d) const;
+	//const b2Vec2& GetSupportVertex(const b2Vec2& d) const;
 
 	/// Get the vertex count.
 	int32 GetVertexCount() const { return m_vertexCount; }
@@ -88,6 +92,7 @@ inline b2PolygonShape::b2PolygonShape()
 	m_centroid.SetZero();
 }
 
+#if 0
 inline int32 b2PolygonShape::GetSupport(const b2Vec2& d) const
 {
 	int32 bestIndex = 0;
@@ -121,6 +126,7 @@ inline const b2Vec2& b2PolygonShape::GetSupportVertex(const b2Vec2& d) const
 
 	return m_vertices[bestIndex];
 }
+#endif
 
 inline const b2Vec2& b2PolygonShape::GetVertex(int32 index) const
 {

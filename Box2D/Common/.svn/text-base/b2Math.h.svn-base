@@ -364,17 +364,23 @@ struct b2Transform
 struct b2Sweep
 {
 	/// Get the interpolated transform at a specific time.
-	/// @param alpha is a factor in [0,1], where 0 indicates t0.
-	void GetTransform(b2Transform* xf, float32 alpha) const;
+	/// @param beta is a factor in [0,1], where 0 indicates alpha0.
+	void GetTransform(b2Transform* xf, float32 beta) const;
 
 	/// Advance the sweep forward, yielding a new initial state.
-	/// @param t the new initial time.
-	void Advance(float32 t);
+	/// @param alpha the new initial time.
+	void Advance(float32 alpha);
+
+	/// Normalize the angles.
+	void Normalize();
 
 	b2Vec2 localCenter;	///< local center of mass position
 	b2Vec2 c0, c;		///< center world positions
 	float32 a0, a;		///< world angles
-	float32 t0;			///< time interval = [t0,1], where t0 is in [0,1]
+
+	/// Fraction of the current time step in the range [0,1]
+	/// c0 and a0 are the positions at alpha0.
+	float32 alpha0;
 };
 
 
@@ -523,6 +529,15 @@ inline b2Vec2 b2MulT(const b2Transform& T, const b2Vec2& v)
 	return b2MulT(T.R, v - T.position);
 }
 
+// v2 = A.R' * (B.R * v1 + B.p - A.p) = (A.R' * B.R) * v1 + (B.p - A.p)
+inline b2Transform b2MulT(const b2Transform& A, const b2Transform& B)
+{
+	b2Transform C;
+	C.R = b2MulT(A.R, B.R);
+	C.position = B.position - A.position;
+	return C;
+}
+
 inline b2Vec2 b2Abs(const b2Vec2& a)
 {
 	return b2Vec2(b2Abs(a.x), b2Abs(a.y));
@@ -594,25 +609,32 @@ inline bool b2IsPowerOfTwo(uint32 x)
 	return result;
 }
 
-inline void b2Sweep::GetTransform(b2Transform* xf, float32 alpha) const
+inline void b2Sweep::GetTransform(b2Transform* xf, float32 beta) const
 {
-	xf->position = (1.0f - alpha) * c0 + alpha * c;
-	float32 angle = (1.0f - alpha) * a0 + alpha * a;
+	xf->position = (1.0f - beta) * c0 + beta * c;
+	float32 angle = (1.0f - beta) * a0 + beta * a;
 	xf->R.Set(angle);
 
 	// Shift to origin
 	xf->position -= b2Mul(xf->R, localCenter);
 }
 
-inline void b2Sweep::Advance(float32 t)
+inline void b2Sweep::Advance(float32 alpha)
 {
-	if (t0 < t && 1.0f - t0 > b2_epsilon)
-	{
-		float32 alpha = (t - t0) / (1.0f - t0);
-		c0 = (1.0f - alpha) * c0 + alpha * c;
-		a0 = (1.0f - alpha) * a0 + alpha * a;
-		t0 = t;
-	}
+	b2Assert(alpha0 < 1.0f);
+	float32 beta = (alpha - alpha0) / (1.0f - alpha0);
+	c0 = (1.0f - beta) * c0 + beta * c;
+	a0 = (1.0f - beta) * a0 + beta * a;
+	alpha0 = alpha;
+}
+
+/// Normalize an angle in radians to be between -pi and pi
+inline void b2Sweep::Normalize()
+{
+	float32 twoPi = 2.0f * b2_pi;
+	float32 d =  twoPi * floorf(a0 / twoPi);
+	a0 -= d;
+	a -= d;
 }
 
 #endif

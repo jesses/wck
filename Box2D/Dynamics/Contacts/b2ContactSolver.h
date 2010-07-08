@@ -25,7 +25,6 @@
 
 class b2Contact;
 class b2Body;
-class b2Island;
 class b2StackAllocator;
 
 struct b2ContactConstraintPoint
@@ -37,14 +36,13 @@ struct b2ContactConstraintPoint
 	float32 tangentImpulse;
 	float32 normalMass;
 	float32 tangentMass;
-	float32 equalizedMass;
 	float32 velocityBias;
 };
 
 struct b2ContactConstraint
 {
 	b2ContactConstraintPoint points[b2_maxManifoldPoints];
-	b2Vec2 localPlaneNormal;
+	b2Vec2 localNormal;
 	b2Vec2 localPoint;
 	b2Vec2 normal;
 	b2Mat22 normalMass;
@@ -52,7 +50,7 @@ struct b2ContactConstraint
 	b2Body* bodyA;
 	b2Body* bodyB;
 	b2Manifold::Type type;
-	float32 radius;
+	float32 radiusA, radiusB;
 	float32 friction;
 	float32 restitution;
 	int32 pointCount;
@@ -64,22 +62,34 @@ struct b2ContactConstraint
 	/// END AS3
 };
 
+struct b2ContactSolverDef
+{
+	b2Contact** contacts;
+	int32 count;
+	b2StackAllocator* allocator;
+	float32 impulseRatio;
+	bool warmStarting;
+};
+
 class b2ContactSolver
 {
 public:
-	b2ContactSolver(const b2TimeStep& step, b2Contact** contacts, int32 contactCount, b2StackAllocator* allocator);
+	b2ContactSolver(b2ContactSolverDef* def);
 	~b2ContactSolver();
 
-	void InitVelocityConstraints(const b2TimeStep& step);
+	void InitializeVelocityConstraints();
+
+	void WarmStart();
 	void SolveVelocityConstraints();
-	void FinalizeVelocityConstraints();
+	void StoreImpulses();
 
 	bool SolvePositionConstraints(float32 baumgarte);
+	bool SolveTOIPositionConstraints(float32 baumgarte, const b2Body* toiBodyA, const b2Body* toiBodyB);
 
-	b2TimeStep m_step;
 	b2StackAllocator* m_allocator;
 	b2ContactConstraint* m_constraints;
-	int m_constraintCount;
+	int m_count;
 };
 
 #endif
+

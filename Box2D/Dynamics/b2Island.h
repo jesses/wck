@@ -60,7 +60,7 @@ public:
 
 	void Solve(const b2TimeStep& step, const b2Vec2& gravity, bool allowSleep);
 
-	void SolveTOI(b2TimeStep& subStep);
+	void SolveTOI(const b2TimeStep& subStep, const b2Body* bodyA, const b2Body* bodyB);
 
 	void Add(b2Body* body)
 	{
@@ -100,8 +100,6 @@ public:
 	int32 m_bodyCapacity;
 	int32 m_contactCapacity;
 	int32 m_jointCapacity;
-
-	int32 m_positionIterationCount;
 };
 
 #endif
