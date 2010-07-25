@@ -450,6 +450,14 @@ AS3_Val b2Vec2Array_delete(void* data, AS3_Val args) {
 	return AS3_Null();
 }
 
+AS3_Val b2Body_ApplyForce(void* data, AS3_Val args) {
+	b2Body* b;
+	b2Vec2 v, p;
+	AS3_ArrayValue(args, "PtrType, DoubleType, DoubleType, DoubleType, DoubleType", &b, &v.x, &v.y, &p.x, &p.y);
+	b->ApplyForce(v, p);
+	return AS3_Null();
+}
+
 
 
 
@@ -476,6 +484,7 @@ AS3_Val b2Core() {
 		"b2Body_SetMassData:AS3ValType,"
 		"b2Body_SetActive:AS3ValType,"
 		"b2Body_SetType:AS3ValType,"
+		"b2Body_ApplyForce:AS3ValType,"
 
 		"b2BodyDef_new:AS3ValType,"
 		"b2BodyDef_delete:AS3ValType,"
@@ -562,6 +571,7 @@ AS3_Val b2Core() {
 		AS3F(b2Body_SetMassData),
 		AS3F(b2Body_SetActive),
 		AS3F(b2Body_SetType),
+		AS3F(b2Body_ApplyForce),
 		
 		AS3F(b2BodyDef_new),
 		AS3F(b2BodyDef_delete),
