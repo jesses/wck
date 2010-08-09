@@ -41,7 +41,8 @@ b2Fixture::b2Fixture()
 	m_reportBeginContact = false;
 	m_reportEndContact = false;
 	m_reportPreSolve = false;
-	m_reportPostSolve = false;	
+	m_reportPostSolve = false;
+	m_conveyorBeltSpeed = 0;
 	/// END AS3
 }
 
