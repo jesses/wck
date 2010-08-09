@@ -803,7 +803,8 @@ void b2World::SolveTOI(const b2TimeStep& step)
 			// Invalidate all contact TOIs on this displaced body.
 			for (b2ContactEdge* ce = body->m_contactList; ce; ce = ce->next)
 			{
-				ce->contact->m_flags &= ~(b2Contact::e_toiFlag | b2Contact::e_islandFlag);
+				ce->contact->m_flags &= ~b2Contact::e_toiFlag;
+				/// AS3 ce->contact->m_flags &= ~b2Contact::e_islandFlag;
 			}
 		}
 
