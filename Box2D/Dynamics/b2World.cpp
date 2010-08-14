@@ -536,7 +536,11 @@ void b2World::SolveTOI(const b2TimeStep& step)
 			c->m_flags &= ~(b2Contact::e_toiFlag | b2Contact::e_islandFlag);
 		}
 	}
-
+	
+	/// AS3
+	int iExitCount = 0;
+	/// END AS3
+	
 	// Find TOI events and solve them.
 	for (;;)
 	{
@@ -804,7 +808,7 @@ void b2World::SolveTOI(const b2TimeStep& step)
 			for (b2ContactEdge* ce = body->m_contactList; ce; ce = ce->next)
 			{
 				ce->contact->m_flags &= ~b2Contact::e_toiFlag;
-				/// AS3 ce->contact->m_flags &= ~b2Contact::e_islandFlag;
+				ce->contact->m_flags &= ~b2Contact::e_islandFlag;
 			}
 		}
 
@@ -817,6 +821,13 @@ void b2World::SolveTOI(const b2TimeStep& step)
 			m_stepComplete = false;
 			break;
 		}
+		
+		/// AS3
+		if (iExitCount == 49) {
+			break;
+		}
+		iExitCount++;
+		/// END AS3
 	}
 }
 
