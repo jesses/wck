@@ -277,10 +277,11 @@ void b2ContactSolver::SolveVelocityConstraints()
 			b2Vec2 dv = vB + b2Cross(wB, ccp->rB) - vA - b2Cross(wA, ccp->rA);
 			
 			/// AS3
-			dv.x += c->fixtureA->m_conveyorBeltSpeed * tangent.x;
-			dv.y += c->fixtureA->m_conveyorBeltSpeed * tangent.y;
-			dv.x -= c->fixtureB->m_conveyorBeltSpeed * tangent.x;
-			dv.y -= c->fixtureB->m_conveyorBeltSpeed * tangent.y;
+			int flip = (c->manifold->type == b2Manifold::e_faceB ? -1 : 1);
+			dv.x += c->fixtureA->m_conveyorBeltSpeed * tangent.x * flip;
+			dv.y += c->fixtureA->m_conveyorBeltSpeed * tangent.y * flip;
+			dv.x -= c->fixtureB->m_conveyorBeltSpeed * tangent.x * flip;
+			dv.y -= c->fixtureB->m_conveyorBeltSpeed * tangent.y * flip;
 			/// END AS3
 
 			// Compute tangent force

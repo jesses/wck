@@ -823,7 +823,7 @@ void b2World::SolveTOI(const b2TimeStep& step)
 		}
 		
 		/// AS3
-		if (iExitCount == 49) {
+		if (iExitCount == 99) {
 			break;
 		}
 		iExitCount++;
