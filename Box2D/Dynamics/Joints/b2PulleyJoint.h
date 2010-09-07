@@ -21,7 +21,7 @@
 
 #include <Box2D/Dynamics/Joints/b2Joint.h>
 
-const float32 b2_minPulleyLength = 0.001f;
+const float32 b2_minPulleyLength = 0.001f; /// AS3 2.0f;
 
 /// Pulley joint definition. This requires two ground anchors,
 /// two dynamic body anchor points, max lengths for each side,

@@ -195,11 +195,6 @@ void b2Island::Solve(const b2TimeStep& step, const b2Vec2& gravity, bool allowSl
 		b->m_linearVelocity += step.dt * (gravity + b->m_invMass * b->m_force);
 		b->m_angularVelocity += step.dt * b->m_invI * b->m_torque;
 
-		/// AS3 Might turn this on again. "ClearForces" blocks mid-timestep force setting :/
-		/// b->m_force.SetZero();
-		/// b->m_torque = 0.0f;
-		/// END AS3
-
 		// Apply damping.
 		// ODE: dv/dt + c * v = 0
 		// Solution: v(t) = v0 * exp(-c * t)

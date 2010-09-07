@@ -551,7 +551,9 @@ AS3_Val b2Core() {
 		"b2LoopShape_delete:AS3ValType,"
 		
 		"b2Vec2Array_new:AS3ValType,"
-		"b2Vec2Array_delete:AS3ValType",
+		"b2Vec2Array_delete:AS3ValType,"
+		
+		"b2Settings:AS3ValType",
 		
 		AS3F(b2World_new),
 		AS3F(b2World_Step),
@@ -638,8 +640,50 @@ AS3_Val b2Core() {
 		AS3F(b2LoopShape_delete),
 		
 		AS3F(b2Vec2Array_new),
-		AS3F(b2Vec2Array_delete)
+		AS3F(b2Vec2Array_delete),
 		
+		AS3_Object(
+			"b2_maxManifoldPoints:PtrType,"
+			"b2_maxPolygonVertices:PtrType,"
+			"b2_aabbExtension:PtrType,"
+			"b2_aabbMultiplier:PtrType,"
+			"b2_linearSlop:PtrType,"
+			"b2_angularSlop:PtrType,"
+			"b2_polygonRadius:PtrType,"
+			"b2_maxSubSteps:PtrType,"
+			"b2_maxTOIContacts:PtrType,"
+			"b2_velocityThreshold:PtrType,"
+			"b2_maxLinearCorrection:PtrType,"
+			"b2_maxAngularCorrection:PtrType,"
+			"b2_maxTranslation:PtrType,"
+			"b2_maxTranslationSquared:PtrType,"
+			"b2_maxRotation:PtrType,"
+			"b2_maxRotationSquared:PtrType,"
+			"b2_contactBaumgarte:PtrType,"
+			"b2_timeToSleep:PtrType,"
+			"b2_linearSleepTolerance:PtrType,"
+			"b2_angularSleepTolerance:PtrType",
+			(void*)&b2_maxManifoldPoints,
+			(void*)&b2_maxPolygonVertices,
+			&b2_aabbExtension,
+			&b2_aabbMultiplier,
+			&b2_linearSlop,
+			&b2_angularSlop,
+			&b2_polygonRadius,
+			&b2_maxSubSteps,
+			&b2_maxTOIContacts,
+			&b2_velocityThreshold,
+			&b2_maxLinearCorrection,
+			&b2_maxAngularCorrection,
+			&b2_maxTranslation,
+			&b2_maxTranslationSquared,
+			&b2_maxRotation,
+			&b2_maxRotationSquared,
+			&b2_contactBaumgarte,
+			&b2_timeToSleep,
+			&b2_linearSleepTolerance,
+			&b2_angularSleepTolerance
+		)
 	);
 }
 

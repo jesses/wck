@@ -29,7 +29,7 @@ int o;
 	o = (int)offsetof(class, member); \
 	sprintf(s, "public function get %s():int { return mem._mr32(_ptr + %d); }", #member, o); TS(s); \
 	sprintf(s, "public function set %s(v:int):void { mem._mw32(_ptr + %d, v); }", #member, o); TS(s);
-	
+		
 #define U16(class, member) \
 	o = (int)offsetof(class, member); \
 	sprintf(s, "public function get %s():int { return mem._mru16(_ptr + %d); }", #member, o); TS(s); \
@@ -80,6 +80,9 @@ AS3_Val testFunction(void* data, AS3_Val args) {
 }
 
 int main() {
+
+
+
 	
 	T(----------);
 
@@ -692,6 +695,25 @@ int main() {
 	AS3_Val core = b2Core();
 	AS3_SetS(core, "emptyFunction", AS3F(emptyFunction));
 	AS3_SetS(core, "testFunction", AS3F(testFunction));
+	
+	AS3_Trace(AS3_Ptr(&b2_aabbExtension));
+	AS3_Trace(AS3_Ptr(&b2_aabbMultiplier));
+	AS3_Trace(AS3_Ptr(&b2_linearSlop));
+	AS3_Trace(AS3_Ptr(&b2_angularSlop));
+	AS3_Trace(AS3_Ptr(&b2_polygonRadius));
+	AS3_Trace(AS3_Ptr(&b2_maxSubSteps));
+	AS3_Trace(AS3_Ptr(&b2_maxTOIContacts));
+	AS3_Trace(AS3_Ptr(&b2_velocityThreshold));
+	AS3_Trace(AS3_Ptr(&b2_maxLinearCorrection));
+	AS3_Trace(AS3_Ptr(&b2_maxAngularCorrection));
+	AS3_Trace(AS3_Ptr(&b2_maxTranslation));
+	AS3_Trace(AS3_Ptr(&b2_maxTranslationSquared));
+	AS3_Trace(AS3_Ptr(&b2_maxRotation));
+	AS3_Trace(AS3_Ptr(&b2_maxRotationSquared));
+	AS3_Trace(AS3_Ptr(&b2_contactBaumgarte));
+	AS3_Trace(AS3_Ptr(&b2_timeToSleep));
+	AS3_Trace(AS3_Ptr(&b2_linearSleepTolerance));
+	AS3_Trace(AS3_Ptr(&b2_angularSleepTolerance));
 	
 	AS3_LibInit(core);
 	
