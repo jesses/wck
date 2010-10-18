@@ -26,7 +26,6 @@
 #include <Box2D/Collision/b2Collision.h>
 #include <Box2D/Common/b2BlockAllocator.h>
 
-
 b2Fixture::b2Fixture()
 {
 	m_userData = NULL;
@@ -44,12 +43,6 @@ b2Fixture::b2Fixture()
 	m_reportPostSolve = false;
 	m_conveyorBeltSpeed = 0;
 	/// END AS3
-}
-
-b2Fixture::~b2Fixture()
-{
-	b2Assert(m_shape == NULL);
-	b2Assert(m_proxies == NULL);
 }
 
 void b2Fixture::Create(b2BlockAllocator* allocator, b2Body* body, const b2FixtureDef* def)
@@ -120,9 +113,6 @@ void b2Fixture::Destroy(b2BlockAllocator* allocator)
 	case b2Shape::e_loop:
 		{
 			b2LoopShape* s = (b2LoopShape*)m_shape;
-			allocator->Free(s->m_vertices, s->m_count * sizeof(b2Vec2));
-			s->m_vertices = NULL;
-			s->m_count = 0;
 			s->~b2LoopShape();
 			allocator->Free(s, sizeof(b2LoopShape));
 		}

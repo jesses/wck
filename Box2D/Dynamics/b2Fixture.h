@@ -155,7 +155,6 @@ public:
 	void SetUserData(void* data);
 
 	/// Test a point for containment in this fixture.
-	/// @param xf the shape world transform.
 	/// @param p a point in world coordinates.
 	bool TestPoint(const b2Vec2& p) const;
 
@@ -179,13 +178,15 @@ public:
 	/// Get the coefficient of friction.
 	float32 GetFriction() const;
 
-	/// Set the coefficient of friction.
+	/// Set the coefficient of friction. This will immediately update the mixed friction
+	/// on all associated contacts.
 	void SetFriction(float32 friction);
 
 	/// Get the coefficient of restitution.
 	float32 GetRestitution() const;
 
-	/// Set the coefficient of restitution.
+	/// Set the coefficient of restitution. This will immediately update the mixed restitution
+	/// on all associated contacts.
 	void SetRestitution(float32 restitution);
 
 	/// Get the fixture's AABB. This AABB may be enlarge and/or stale.
@@ -201,7 +202,6 @@ public:
 	friend class b2ContactManager;
 
 	b2Fixture();
-	~b2Fixture();
 
 	// We need separation create/destroy functions from the constructor/destructor because
 	// the destructor cannot access the allocator (no destructor arguments allowed by C++).

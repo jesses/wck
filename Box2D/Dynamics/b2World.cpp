@@ -61,6 +61,23 @@ b2World::b2World(const b2Vec2& gravity, bool doSleep)
 
 b2World::~b2World()
 {
+	// Some shapes allocate using b2Alloc.
+	b2Body* b = m_bodyList;
+	while (b)
+	{
+		b2Body* bNext = b->m_next;
+
+		b2Fixture* f = b->m_fixtureList;
+		while (f)
+		{
+			b2Fixture* fNext = f->m_next;
+			f->m_proxyCount = 0;
+			f->Destroy(&m_blockAllocator);
+			f = fNext;
+		}
+
+		b = bNext;
+	}
 }
 
 void b2World::SetDestructionListener(b2DestructionListener* listener)
@@ -983,12 +1000,13 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 	case b2Shape::e_loop:
 		{
 			b2LoopShape* loop = (b2LoopShape*)fixture->GetShape();
-			int32 count = loop->m_count;
+			int32 count = loop->GetCount();
+			const b2Vec2* vertices = loop->GetVertices();
 
-			b2Vec2 v1 = b2Mul(xf, loop->m_vertices[count - 1]);
+			b2Vec2 v1 = b2Mul(xf, vertices[count - 1]);
 			for (int32 i = 0; i < count; ++i)
 			{
-				b2Vec2 v2 = b2Mul(xf, loop->m_vertices[i]);
+				b2Vec2 v2 = b2Mul(xf, vertices[i]);
 				m_debugDraw->DrawSegment(v1, v2, color);
 				v1 = v2;
 			}

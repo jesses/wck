@@ -155,7 +155,7 @@ int main() {
 	I(b2World, m_jointCount);
 	C(b2World, m_gravity, b2Vec2);
 	B(b2World, m_allowSleep);
-	C(b2World, m_groundBody, b2Body);
+	// C(b2World, m_groundBody, b2Body); // !!!!!!
 	C(b2World, m_contactManager, b2ContactManager);
 	B(b2World, m_warmStarting);
 	B(b2World, m_continuousPhysics);
@@ -579,6 +579,27 @@ int main() {
 	F(b2WeldJoint, m_referenceAngle);
 	C(b2WeldJoint, m_impulse, b2Vec3);
 	C(b2WeldJoint, m_mass, b2Mat33);
+	
+	T(----------);
+	
+	T(b2RopeJointDef);
+	C(b2RopeJointDef, localAnchorA, b2Vec2);
+	C(b2RopeJointDef, localAnchorB, b2Vec2);
+	F(b2RopeJointDef, maxLength);
+	
+	T(----------);
+	
+	T(b2RopeJoint);
+	C(b2RopeJoint, m_localAnchorA, b2Vec2);
+	C(b2RopeJoint, m_localAnchorB, b2Vec2);
+	F(b2RopeJoint, m_maxLength);
+	F(b2RopeJoint, m_length);
+	C(b2RopeJoint, m_u, b2Vec2);
+	C(b2RopeJoint, m_rA, b2Vec2);
+	C(b2RopeJoint, m_rB, b2Vec2);
+	F(b2RopeJoint, m_mass);
+	F(b2RopeJoint, m_impulse);
+	S16(b2LineJoint, m_limitState);
 	
 	T(----------);
 	

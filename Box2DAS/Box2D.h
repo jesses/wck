@@ -43,6 +43,7 @@
 #include "Box2D/Dynamics/Joints/b2RevoluteJoint.cpp";
 #include "Box2D/Dynamics/Joints/b2FrictionJoint.cpp";
 #include "Box2D/Dynamics/Joints/b2WeldJoint.cpp";
+#include "Box2D/Dynamics/Joints/b2RopeJoint.cpp";
 #include "Box2D/ConvexDecomposition/b2Triangle.cpp";
 
 #include "Box2D/ConvexDecomposition/b2Polygon.cpp";
@@ -87,6 +88,7 @@ as3_new_del(b2PulleyJointDef);
 as3_new_del(b2RevoluteJointDef);
 as3_new_del(b2FrictionJointDef);
 as3_new_del(b2WeldJointDef);
+as3_new_del(b2RopeJointDef);
 as3_new_del(b2MassData);
 
 /// And for b2Distance stuff
@@ -525,6 +527,9 @@ AS3_Val b2Core() {
 		"b2FrictionJointDef_new:AS3ValType,"
 		"b2FrictionJointDef_delete:AS3ValType,"
 		
+		"b2RopeJointDef_new:AS3ValType,"
+		"b2RopeJointDef_delete:AS3ValType,"
+		
 		"b2MassData_new:AS3ValType,"
 		"b2MassData_delete:AS3ValType,"
 		
@@ -613,6 +618,9 @@ AS3_Val b2Core() {
 		
 		AS3F(b2FrictionJointDef_new),
 		AS3F(b2FrictionJointDef_delete),
+		
+		AS3F(b2RopeJointDef_new),
+		AS3F(b2RopeJointDef_delete),
 		
 		AS3F(b2MassData_new),
 		AS3F(b2MassData_delete),
