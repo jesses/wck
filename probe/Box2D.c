@@ -405,20 +405,21 @@ int main() {
 	C(b2LineJointDef, localAnchorA, b2Vec2);
 	C(b2LineJointDef, localAnchorB, b2Vec2);
 	C(b2LineJointDef, localAxisA, b2Vec2);
-	B(b2LineJointDef, enableLimit);
-	F(b2LineJointDef, lowerTranslation);
-	F(b2LineJointDef, upperTranslation);
 	B(b2LineJointDef, enableMotor);
-	F(b2LineJointDef, maxMotorForce);
+	F(b2LineJointDef, maxMotorTorque);
 	F(b2LineJointDef, motorSpeed);
+	F(b2LineJointDef, frequencyHz);
+	F(b2LineJointDef, dampingRatio);
 	
 	T(----------);
 	
 	T(b2LineJoint);
-	C(b2LineJoint, m_localAnchor1, b2Vec2);
-	C(b2LineJoint, m_localAnchor2, b2Vec2);
-	C(b2LineJoint, m_localXAxis1, b2Vec2);
-	C(b2LineJoint, m_localYAxis1, b2Vec2);
+	C(b2LineJoint, m_localAnchorA, b2Vec2);
+	C(b2LineJoint, m_localAnchorB, b2Vec2);
+	C(b2LineJoint, m_localXAxisA, b2Vec2);
+	C(b2LineJoint, m_localYAxisA, b2Vec2);
+	
+	/* Line joint has changed. 
 	C(b2LineJoint, m_impulse, b2Vec2);
 	F(b2LineJoint, m_motorMass);
 	F(b2LineJoint, m_motorImpulse);
@@ -434,9 +435,30 @@ int main() {
 	F(b2LineJoint, m_s1);
 	F(b2LineJoint, m_s2);
 	F(b2LineJoint, m_a1);
-	F(b2LineJoint, m_a2);
+	F(b2LineJoint, m_a2); */
 
-	b2Mat22 m_K;
+	C(b2LineJoint, m_ax, b2Vec2);
+	C(b2LineJoint, m_ay, b2Vec2);
+	F(b2LineJoint, m_sAx)
+	F(b2LineJoint, m_sBx);
+	F(b2LineJoint, m_sAy);
+	F(b2LineJoint, m_sBy);
+
+	F(b2LineJoint, m_mass);
+	F(b2LineJoint, m_impulse);
+	F(b2LineJoint, m_motorMass);
+	F(b2LineJoint, m_motorImpulse);
+	F(b2LineJoint, m_springMass);
+	F(b2LineJoint, m_springImpulse);
+
+	F(b2LineJoint, m_maxMotorTorque);
+	F(b2LineJoint, m_motorSpeed);
+	F(b2LineJoint, m_frequencyHz);
+	F(b2LineJoint, m_dampingRatio);
+	F(b2LineJoint, m_bias);
+	F(b2LineJoint, m_gamma);
+
+	B(b2LineJoint, m_enableMotor);
 	
 	T(----------);
 	
@@ -599,7 +621,6 @@ int main() {
 	C(b2RopeJoint, m_rB, b2Vec2);
 	F(b2RopeJoint, m_mass);
 	F(b2RopeJoint, m_impulse);
-	S16(b2LineJoint, m_limitState);
 	
 	T(----------);
 	

@@ -189,6 +189,7 @@ public:
 	};
 
 	friend class b2Body;
+	friend class b2Fixture;
 	friend class b2ContactManager;
 	friend class b2Controller;
 
